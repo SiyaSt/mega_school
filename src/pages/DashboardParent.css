@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap  ');
+
 .dashboard-parent {
   min-height: 100vh;
   display: flex;
@@ -15,6 +17,7 @@
 .dashboard-parent-title {
   font-size: 2rem;
   margin: 0 0 1.5rem;
+  font-family: 'Press Start 2P', cursive;
   color: #333;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
@@ -25,6 +28,7 @@
 .parent-child-card,
 .parent-stats-card {
   margin-bottom: 1.5rem;
+  background-color: #ededed;
 }
 
 .parent-child-card h2,
@@ -32,12 +36,14 @@
   margin: 0 0 1rem;
   font-size: 1.25rem;
   color: #333;
+  background-color: #ededed;
 }
 
 .parent-child-card p,
 .parent-stats-card p {
   margin: 0 0 0.5rem;
-  color: #555;
+  color: #333;
+  background-color: #ededed;
 }
 
 .parent-actions {
@@ -48,6 +54,6 @@
 }
 
 .parent-subscription {
-  color: #888;
+  color: #333;
   font-size: 0.95rem;
 }

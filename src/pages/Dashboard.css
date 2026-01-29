@@ -36,6 +36,7 @@
 }
 
 .dashboard-card {
+  background-color: #ededed;
   cursor: pointer;
   padding: 2rem;
   text-align: center;

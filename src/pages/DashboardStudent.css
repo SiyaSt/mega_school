@@ -22,6 +22,14 @@
   background-clip: text;
 }
 
+.profile-card {
+  background-color: #ededed;
+}
+
+.lessons-history {
+  background-color: #ededed;
+}
+
 .profile-card,
 .quick-actions,
 .lessons-history {

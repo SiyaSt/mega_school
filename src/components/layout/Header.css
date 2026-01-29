@@ -37,7 +37,7 @@
 .logo {
   text-decoration: none;
   font-family: 'Press Start 2P', cursive;
-  color: #ff9a02;
+  color: #333;
   z-index: 1001;
 }
 
@@ -53,7 +53,7 @@
 .nav-link {
   font-family: 'Press Start 2P', cursive;
   text-decoration: none;
-  color: #291304;
+  color: #333;
   font-weight: bold;
   transition: all 0.3s ease;
   padding: 5px 10px;
@@ -63,7 +63,7 @@
 
 /* Прозрачные ссылки когда header прозрачный */
 .header:not(.scrolled) .nav-link {
-  color: white;
+  color: #333;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -85,7 +85,7 @@
 
 /* При скролле - кнопка наследует цвет */
 .header.scrolled .nav-btn {
-  color: #222;
+  color: #333;
 }
 
 /* Анимация появления хедера */

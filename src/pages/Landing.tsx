@@ -9,44 +9,68 @@ import aiIcon from "../assets/ai-icon.png";
 import assignmentIcon from "../assets/assignment-icon.png";
 import pointsIcon from "../assets/points-icon.png";
 
-// // Импорт изображений для членов команды
-// import member1 from "../assets/team/member-1.jpg";
-// import member2 from "../assets/team/member-2.jpg";
-// import member3 from "../assets/team/member-3.jpg";
-// import member4 from "../assets/team/member-4.jpg";
-// import member5 from "../assets/team/member-5.jpg";
-// import member6 from "../assets/team/member-6.jpg";
-// import member7 from "../assets/team/member-7.jpg";
-// import member8 from "../assets/team/member-8.jpg";
-// import member9 from "../assets/team/member-9.jpg";
-// import member10 from "../assets/team/member-10.jpg";
+import member1 from "../assets/member-1.jpg";
+import member2 from "../assets/member-2.jpg";
+import member3 from "../assets/member-3.jpg";
+import member4 from "../assets/member-4.jpg";
+import member5 from "../assets/member-5.jpg";
+import member6 from "../assets/member-6.jpg";
+import member7 from "../assets/member-7.jpg";
+import member8 from "../assets/member-8.jpg";
+import member9 from "../assets/member-9.jpg";
+import member10 from "../assets/member-10.jpg";
 
 const teamMembers = [
-  // { id: 1, name: "Анна Петрова", role: "Основатель проекта", photo: member1 },
-  // { id: 2, name: "Иван Сидоров", role: "Главный разработчик", photo: member2 },
-  // { id: 3, name: "Мария Козлова", role: "UX/UI дизайнер", photo: member3 },
-  // {
-  //   id: 4,
-  //   name: "Дмитрий Волков",
-  //   role: "Методист по математике",
-  //   photo: member4,
-  // },
-  // {
-  //   id: 5,
-  //   name: "Елена Соколова",
-  //   role: "Методист по русскому языку",
-  //   // photo: member5,
-  // },
-  // // { id: 6, name: "Алексей Морозов", role: "AI-инженер", photo: member6 },
-  // { id: 7, name: "Ольга Новикова", role: "Контент-менеджер", photo: member7 },
-  // { id: 8, name: "Сергей Лебедев", role: "QA-инженер", photo: member8 },
-  // { id: 9, name: "Татьяна Орлова", role: "Маркетолог", photo: member9 },
-  // {
-  //   id: 10,
-  //   name: "Павел Смирнов",
-  //   role: "Backend разработчик",
-  //   photo: member10,
-  // },
+  {
+    id: 1,
+    name: "Давыдов Егор",
+    role: "Проджект (Team Lead), разработчик",
+    photo: member1,
+  },
+  {
+    id: 2,
+    name: "Вакуненкова Софья",
+    role: "Продакт менеджер",
+    photo: member2,
+  },
+  {
+    id: 3,
+    name: "Данилов Дмитрий",
+    role: "Архитектор-разработчик",
+    photo: member3,
+  },
+  {
+    id: 4,
+    name: "Окладников Платон",
+    role: "Маркетолог",
+    photo: member4,
+  },
+  {
+    id: 5,
+    name: "Николаева Анжелика",
+    role: "Аналитик-дизайнер",
+    photo: member5,
+  },
+  { id: 6, name: "Нисифорова Полина", role: "UI Дизайнер", photo: member6 },
+  { id: 7, name: "Палакян Тигран", role: "Финансист", photo: member7 },
+  {
+    id: 8,
+    name: "Стеценко Анастасия",
+    role: "Исследователь-разработчик",
+    photo: member8,
+  },
+  {
+    id: 9,
+    name: "Милькевич Михаил",
+    role: "Помощник маркетолога",
+    photo: member9,
+  },
+  {
+    id: 10,
+    name: "Фуфик",
+    role: "Наш маскот",
+    photo: member10,
+  },
 ];
 
 const learningSteps = [
@@ -131,14 +155,6 @@ export const Landing: React.FC = () => {
                     src={member.photo}
                     alt={member.name}
                     className="team-photo-img"
-                    onError={(e) => {
-                      // Fallback если изображение не загрузилось
-                      e.currentTarget.style.display = "none";
-                      const fallback = document.createElement("div");
-                      fallback.className = "team-photo-fallback";
-                      fallback.textContent = member.name.charAt(0);
-                      e.currentTarget.parentNode?.appendChild(fallback);
-                    }}
                   />
                 </div>
                 <h3 className="team-name">{member.name}</h3>

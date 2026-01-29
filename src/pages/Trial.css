@@ -5,6 +5,11 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-image: url('../assets/image 1.png'),
+  url('../assets/image 2.png');
+  background-repeat: no-repeat, no-repeat;
+  background-position: left 20px top 40px, right 20px bottom 40px;
+  background-size: 400px;
 }
 
 .trial-main {
@@ -49,6 +54,9 @@
 
 .subject-selection {
   margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .selection-title {
@@ -61,7 +69,7 @@
 
 .subjects-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 300px);
   gap: 1.5rem;
   align-items: center;
   justify-items: center;

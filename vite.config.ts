@@ -1,8 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tsconfigPaths from "vite-tsconfig-paths";
+
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: '/mega_school/'
+  plugins: [react(), tsconfigPaths()],
+  base: '/mega_school/',
+  resolve: {
+    alias: {
+      "~bootstrap": "bootstrap",
+    },
+  }
 })

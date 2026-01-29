@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap');
+
+
 .trial {
   min-height: 100vh;
   display: flex;
@@ -18,11 +21,8 @@
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 2rem;
+  font-family: 'Press Start 2P', cursive;
   color: #333;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .trial-description {
@@ -55,13 +55,16 @@
   text-align: center;
   font-size: 2rem;
   margin-bottom: 2rem;
+  font-family: 'Press Start 2P', cursive;
   color: #333;
 }
 
 .subjects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
   gap: 1.5rem;
+  align-items: center;
+  justify-items: center;
 }
 
 @media (prefers-color-scheme: dark) {

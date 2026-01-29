@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Footer.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Footer.css";
 
 export const Footer: React.FC = () => {
   return (
@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2026 Mega School. Все права защищены.</p>
+        <p>&copy; 2026 Mega School. Все права защищены нами :)</p>
       </div>
     </footer>
   );

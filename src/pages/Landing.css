@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap');
+
 .landing {
   min-height: 100vh;
   display: flex;
@@ -54,6 +56,8 @@
   font-size: 2.5rem;
   margin-bottom: 3rem;
   color: #333;
+  font-family: 'Press Start 2P', cursive;
+
 }
 
 .steps-grid {
@@ -70,6 +74,11 @@
 .step-icon {
   font-size: 4rem;
   margin-bottom: 1rem;
+}
+
+.step-icon-img{
+width: 100%;
+  height: 100%;
 }
 
 .step-title {

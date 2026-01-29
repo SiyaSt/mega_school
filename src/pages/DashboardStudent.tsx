@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '../components/common/Card';
 import { useAuth } from '../context/AuthContext';
@@ -9,8 +9,7 @@ const subjectNames: Record<string, string> = {
   russian: 'Русский язык',
   algebra: 'Алгебра',
   geometry: 'Геометрия',
-  math: 'Математика',
-  history: 'История',
+  literature: 'Литература',
 };
 
 export const DashboardStudent: React.FC = () => {

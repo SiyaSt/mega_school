@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '../components/common/Button';
 import { Card } from '../components/common/Card';
 import { VideoPlayerMock } from '../components/lesson/VideoPlayerMock';
 import { ChatWithAI } from '../components/lesson/ChatWithAI';
-import { getLessonTopic } from '../services/aiHelper';
 import { useAuth } from '../context/AuthContext';
 import { useUserProgress } from '../context/UserProgressContext';
 import './LessonPlay.css';
@@ -13,9 +12,11 @@ const subjectNames: Record<string, string> = {
   russian: 'Русский язык',
   algebra: 'Алгебра',
   geometry: 'Геометрия',
-  math: 'Математика (до 7 класса)',
-  history: 'История',
+  literature: 'Литература',
 };
+
+const TOTAL_QUESTIONS = 4;
+const MAX_POINTS_PER_QUESTION = 10;
 
 export const LessonPlay: React.FC = () => {
   const navigate = useNavigate();
@@ -25,20 +26,13 @@ export const LessonPlay: React.FC = () => {
   const { registerLessonResult, childId } = useUserProgress();
 
   const [currentPoints, setCurrentPoints] = useState(0);
-  const [maxPossiblePoints, setMaxPossiblePoints] = useState(0);
+  const [maxPossiblePoints] = useState(TOTAL_QUESTIONS * MAX_POINTS_PER_QUESTION);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [topicName, setTopicName] = useState('');
 
-  const lessonTopic = subjectId ? getLessonTopic(subjectId) : null;
   const subjectName = subjectId ? subjectNames[subjectId] || 'Предмет' : 'Предмет';
 
-  useEffect(() => {
-    if (lessonTopic) {
-      const total = lessonTopic.questions.reduce((sum, q) => sum + q.points, 0);
-      setMaxPossiblePoints(total);
-    }
-  }, [lessonTopic]);
-
-  if (!lessonTopic) {
+  if (!subjectId) {
     return (
       <div className="lesson-play">
         <div className="lesson-play-main">
@@ -57,13 +51,13 @@ export const LessonPlay: React.FC = () => {
   };
 
   const handleComplete = async (totalPoints: number) => {
-    if (isAuthenticated && lessonTopic) {
+    if (isAuthenticated) {
       try {
         await registerLessonResult({
           childId: childId ?? undefined,
           points: totalPoints,
           subjectId,
-          topicName: lessonTopic.topicName,
+          topicName: topicName || subjectName,
         });
       } catch {
         // ignore; points still shown locally
@@ -97,7 +91,7 @@ export const LessonPlay: React.FC = () => {
           <div className="lesson-header">
             <div className="lesson-title-section">
               <h1 className="lesson-subject">{subjectName}</h1>
-              <p className="lesson-topic">{lessonTopic.topicName}</p>
+              <p className="lesson-topic">{topicName || 'Подбираем тему…'}</p>
             </div>
             <Button variant="outline" onClick={handleExit} className="exit-btn">
               {isCompleted ? 'В ЛК' : 'Выход'}
@@ -109,7 +103,7 @@ export const LessonPlay: React.FC = () => {
               <div className="video-section">
                 <VideoPlayerMock
                   subjectName={subjectName}
-                  topicName={lessonTopic.topicName}
+                  topicName={topicName || 'Подбираем тему'}
                 />
               </div>
             </div>
@@ -117,8 +111,10 @@ export const LessonPlay: React.FC = () => {
             <div className="lesson-right">
               <div className="chat-section">
                 <ChatWithAI
-                  questions={lessonTopic.questions}
-                  topicName={lessonTopic.topicName}
+                  subjectId={subjectId}
+                  subjectName={subjectName}
+                  totalQuestions={TOTAL_QUESTIONS}
+                  onTopicChange={setTopicName}
                   onPointsChange={handlePointsChange}
                   onComplete={handleComplete}
                 />
@@ -145,7 +141,7 @@ export const LessonPlay: React.FC = () => {
                   />
                 </div>
                 <p className="points-hint">
-                  За правильные ответы ты получаешь баллы. За попытку тоже начисляется балл!
+                  За правильные ответы ты получаешь баллы. За попытку тоже начисляется небольшой балл!
                 </p>
               </Card>
             </div>
@@ -154,7 +150,7 @@ export const LessonPlay: React.FC = () => {
           {isCompleted && (
             <div className="completion-modal-overlay" onClick={handleFinish}>
               <Card className="completion-modal" onClick={(e) => e?.stopPropagation()}>
-                <div className="completion-icon">🎉</div>
+                <div className="completion-icon">??</div>
                 <h2 className="completion-title">Поздравляем!</h2>
                 <p className="completion-text">
                   Ты успешно прошёл урок и заработал <strong>{currentPoints}</strong> баллов из{' '}

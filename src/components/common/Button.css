@@ -1,14 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap');
+
 .btn {
   border-radius: 12px;
   border: none;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: inherit;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
+
 }
 
 a.btn {
@@ -16,9 +19,8 @@ a.btn {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  background: #ff9a02;
+  color: #333;
 }
 
 .btn-primary:hover {

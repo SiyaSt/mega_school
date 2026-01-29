@@ -1,51 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap');
+
+/* Основные стили для Header */
 .header {
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 5px 0;
+  transition: all 0.3s ease;
+  background: transparent;
+  font-family: 'Press Start 2P', cursive;
 }
 
-.header-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
+/* При скролле - появляется цвет и тень */
+.header.scrolled {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+}
+
+.header.scrolled .nav-link {
+  color: #222;
+}
+
+/* Контейнер */
+.header__inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
+  height: 80px;
 }
 
+/* Логотип */
 .logo {
   text-decoration: none;
-  color: inherit;
+  font-family: 'Press Start 2P', cursive;
+  color: #ff9a02;
+  z-index: 1001;
 }
 
-.logo h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
+/* Навигация */
 .nav {
   display: flex;
   gap: 2rem;
+  height: 100%;
   align-items: center;
 }
 
+/* Ссылки навигации */
 .nav-link {
+  font-family: 'Press Start 2P', cursive;
   text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  transition: color 0.3s ease;
+  color: #291304;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 4px;
+  position: relative;
 }
 
+/* Прозрачные ссылки когда header прозрачный */
+.header:not(.scrolled) .nav-link {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Ховер эффект для ссылок */
 .nav-link:hover {
-  color: #667eea;
+  color: #7e330a;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
+/* Кнопка выхода */
 .nav-btn {
   background: none;
   border: none;
@@ -54,29 +83,98 @@
   padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  .header {
-    background: #1a1a1a;
+/* При скролле - кнопка наследует цвет */
+.header.scrolled .nav-btn {
+  color: #222;
+}
+
+/* Анимация появления хедера */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
   }
-  
-  .nav-link {
-    color: rgba(255, 255, 255, 0.87);
-  }
-  
-  .nav-link:hover {
-    color: #667eea;
+  to {
+    transform: translateY(0);
   }
 }
 
+.header {
+  animation: slideDown 0.5s ease-out;
+}
+
+/* Градиентная граница для красивого эффекта */
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.header.scrolled::after {
+  opacity: 1;
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .header.scrolled {
+    background: #1a1a1a;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .header.scrolled .nav-link {
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .header.scrolled .nav-link:hover {
+    color: #ff9a02;
+  }
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
-  .header-container {
+  .header__inner {
     flex-direction: column;
     gap: 1rem;
+    padding: 10px 20px;
+    height: auto;
   }
-  
+
   .nav {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+  }
+
+  .logo h1 {
+    font-size: 1.2rem;
+  }
+
+  .nav-link {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+  .header__inner {
+    padding: 10px;
+  }
+
+  .nav {
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    font-size: 0.7rem;
+  }
+
+  .logo h1 {
+    font-size: 1rem;
   }
 }

@@ -1,0 +1,73 @@
+.dashboard-student {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-student-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboard-student-title {
+  font-size: 2rem;
+  margin: 0 0 1.5rem;
+  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.profile-card,
+.quick-actions,
+.lessons-history {
+  margin-bottom: 1.5rem;
+}
+
+.profile-card h2,
+.quick-actions h2,
+.lessons-history h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.profile-card p {
+  margin: 0 0 0.5rem;
+  color: #555;
+}
+
+.quick-actions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.lessons-history ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lessons-history li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+.lessons-history li:last-child {
+  border-bottom: none;
+}
+
+.no-lessons {
+  color: #666;
+}
+
+.no-lessons a {
+  color: #667eea;
+  font-weight: 600;
+}

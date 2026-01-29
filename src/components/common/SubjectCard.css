@@ -1,0 +1,32 @@
+.subject-card {
+  cursor: pointer;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  border: none;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.subject-card:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.subject-card-content {
+  text-align: center;
+  width: 100%;
+}
+
+.subject-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.subject-name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+}

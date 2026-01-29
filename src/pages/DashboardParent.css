@@ -1,0 +1,53 @@
+.dashboard-parent {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-parent-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboard-parent-title {
+  font-size: 2rem;
+  margin: 0 0 1.5rem;
+  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.parent-child-card,
+.parent-stats-card {
+  margin-bottom: 1.5rem;
+}
+
+.parent-child-card h2,
+.parent-stats-card h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.parent-child-card p,
+.parent-stats-card p {
+  margin: 0 0 0.5rem;
+  color: #555;
+}
+
+.parent-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.parent-subscription {
+  color: #888;
+  font-size: 0.95rem;
+}

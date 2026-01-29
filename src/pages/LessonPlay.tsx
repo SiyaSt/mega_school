@@ -26,7 +26,7 @@ export const LessonPlay: React.FC = () => {
 
   const [currentPoints, setCurrentPoints] = useState(0);
   const [maxPossiblePoints, setMaxPossiblePoints] = useState(0);
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [_, setIsCompleted] = useState(false);
 
   const lessonTopic = subjectId ? getLessonTopic(subjectId) : null;
   const subjectName = subjectId

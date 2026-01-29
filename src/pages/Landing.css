@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap');
+/* Landing.css - добавлены медиа-запросы для ноутбуков */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap  ');
 
 .landing {
   min-height: 100vh;
@@ -31,38 +32,18 @@
   position: absolute;
   top: 55%;
   left: 50%;
-  min-width: 100%;
+  max-width: 100%;
   min-height: 80%;
   width: auto;
   height: auto;
   transform: translate(-50%, -50%);
   z-index: 100;
-
-}
-
-.hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.hero-title {
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
-}
-
-.hero-description {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
-  opacity: 0.95;
-  line-height: 1.6;
 }
 
 .hero-cta {
   position: absolute;
   top: 125%;
-  left: 37%;
-
+  left: 35%;
 }
 
 /* Learning Steps */
@@ -76,7 +57,6 @@
   margin-bottom: 3rem;
   color: #333;
   font-family: 'Press Start 2P', cursive;
-
 }
 
 .steps-grid {
@@ -95,8 +75,8 @@
   margin-bottom: 1rem;
 }
 
-.step-icon-img{
-width: 100%;
+.step-icon-img {
+  width: 100%;
   height: 100%;
 }
 
@@ -134,10 +114,10 @@ width: 100%;
   max-width: 170px;
   max-height: 170px;
   border-radius: 50%;
-  width: 170px; /* Фиксированная ширина */
-  height: 170px; /* Фиксированная высота */
-  object-fit: cover; /* Обрезает изображение, сохраняя пропорции */
-  object-position: center; /* Центрирует изображение в круге */
+  width: 170px;
+  height: 170px;
+  object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -154,23 +134,150 @@ width: 100%;
   margin: 0;
 }
 
+/* ============ АДАПТИВНОСТЬ ДЛЯ НОУТБУКОВ ============ */
+
+/* Ноутбуки 1024px - 1280px */
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .landing-main {
+    padding: 1.5rem;
+  }
+
+  .hero {
+    height: 110vh;
+  }
+
+  .hero-cta {
+    top: 120%;
+    left: 35%;
+    font-size: 1rem;
+    padding: 12px 24px;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .steps-grid {
+    gap: 1.5rem;
+  }
+
+  .step-card {
+    padding: 1.5rem;
+  }
+
+  .step-icon {
+    font-size: 3.5rem;
+  }
+
+  .step-title {
+    font-size: 1.3rem;
+  }
+
+  .step-description {
+    font-size: 0.95rem;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .team-photo-img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .team-name {
+    font-size: 1rem;
+  }
+
+  .team-role {
+    font-size: 0.8rem;
+  }
+}
+
+/* Маленькие ноутбуки / Планшеты альбомные 769px - 1023px */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .landing-main {
+    padding: 1.25rem;
+  }
+
+  .hero {
+    height: 100vh;
+  }
+
+  .hero-cta {
+    top: 115%;
+    left: 30%;
+    font-size: 0.95rem;
+    padding: 10px 20px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .step-card {
+    padding: 1.25rem;
+  }
+
+  .step-icon {
+    font-size: 3rem;
+  }
+
+  .step-title {
+    font-size: 1.2rem;
+  }
+
+  .step-description {
+    font-size: 0.9rem;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .team-photo-img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .team-name {
+    font-size: 0.95rem;
+  }
+
+  .team-role {
+    font-size: 0.75rem;
+  }
+}
+
+/* ============ СУЩЕСТВУЮЩИЕ СТИЛИ БЕЗ ИЗМЕНЕНИЙ ============ */
+
 @media (prefers-color-scheme: dark) {
   .section-title {
     color: rgba(255, 255, 255, 0.87);
   }
-  
+
   .step-title {
     color: rgba(255, 255, 255, 0.87);
   }
-  
+
   .step-description {
     color: rgba(255, 255, 255, 0.7);
   }
-  
+
   .team-name {
     color: rgba(255, 255, 255, 0.87);
   }
-  
+
   .team-role {
     color: rgba(255, 255, 255, 0.7);
   }
@@ -179,24 +286,32 @@ width: 100%;
 @media (max-width: 768px) {
   .hero {
     padding: 2rem 1rem;
+    height: 90vh;
   }
-  
+
+  .hero-cta {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 2rem auto 0;
+  }
+
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .hero-description {
     font-size: 1rem;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .steps-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .team-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }

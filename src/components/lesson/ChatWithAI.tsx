@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import type { Question, AIResponse } from '../../services/aiHelper';
-import { checkAnswer, getWelcomeMessage, getCompletionMessage } from '../../services/aiHelper';
-import './ChatWithAI.css';
+import React, { useState, useEffect, useRef } from "react";
+import type { Question, AIResponse } from "../../services/aiHelper";
+import {
+  checkAnswer,
+  getWelcomeMessage,
+  getCompletionMessage,
+} from "../../services/aiHelper";
+import "./ChatWithAI.css";
 
 interface ChatMessage {
   id: number;
-  sender: 'ai' | 'user';
+  sender: "ai" | "user";
   text: string;
   timestamp: Date;
   question?: Question;
@@ -28,7 +32,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
 }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isWaitingForAnswer, setIsWaitingForAnswer] = useState(false);
   const [, setTotalPoints] = useState(0);
@@ -36,7 +40,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   const messageIdCounter = useRef(0);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -46,19 +50,19 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   useEffect(() => {
     // Инициализация: приветственное сообщение и первое задание
     if (questions.length === 0) return;
-    
+
     messageIdCounter.current = 0;
     const welcomeMsg: ChatMessage = {
       id: messageIdCounter.current++,
-      sender: 'ai',
+      sender: "ai",
       text: getWelcomeMessage(topicName),
       timestamp: new Date(),
     };
 
     const firstQuestion: ChatMessage = {
       id: messageIdCounter.current++,
-      sender: 'ai',
-      text: questions[0]?.question || '',
+      sender: "ai",
+      text: questions[0]?.question || "",
       timestamp: new Date(),
       question: questions[0],
     };
@@ -66,7 +70,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
     setMessages([welcomeMsg, firstQuestion]);
     setCurrentQuestionIndex(0);
     setTotalPoints(0);
-    setUserInput('');
+    setUserInput("");
     setSelectedOption(null);
     setIsWaitingForAnswer(false);
   }, [topicName, questions]);
@@ -80,25 +84,25 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
     let answer: string | number;
     let answerText: string;
 
-    if (currentQuestion.type === 'choice') {
+    if (currentQuestion.type === "choice") {
       if (selectedOption === null) return;
       answer = selectedOption;
-      answerText = currentQuestion.options?.[selectedOption] || '';
-    } else if (currentQuestion.type === 'text') {
+      answerText = currentQuestion.options?.[selectedOption] || "";
+    } else if (currentQuestion.type === "text") {
       if (!userInput.trim()) return;
       answer = userInput.trim();
       answerText = userInput.trim();
     } else {
       // photo type
-      answer = 'photo';
-      answerText = '📸 Фото отправлено';
+      answer = "photo";
+      answerText = "📸 Фото отправлено";
     }
 
     // Добавляем сообщение пользователя
     const userMessageId = messageIdCounter.current++;
     const userMessage: ChatMessage = {
       id: userMessageId,
-      sender: 'user',
+      sender: "user",
       text: answerText,
       timestamp: new Date(),
       userAnswer: answer,
@@ -120,7 +124,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
       const aiMessageId = messageIdCounter.current++;
       const aiMessage: ChatMessage = {
         id: aiMessageId,
-        sender: 'ai',
+        sender: "ai",
         text: aiResponse.message,
         timestamp: new Date(),
         pointsAwarded: aiResponse.pointsAwarded,
@@ -136,7 +140,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
           const nextQuestionMessageId = messageIdCounter.current++;
           const nextQuestionMessage: ChatMessage = {
             id: nextQuestionMessageId,
-            sender: 'ai',
+            sender: "ai",
             text: nextQuestion.question,
             timestamp: new Date(),
             question: nextQuestion,
@@ -144,7 +148,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
           setMessages((prev) => [...prev, nextQuestionMessage]);
           setCurrentQuestionIndex(nextIndex);
           setIsWaitingForAnswer(false);
-          setUserInput('');
+          setUserInput("");
           setSelectedOption(null);
         }, 1000);
       } else {
@@ -153,7 +157,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
           const completionMessageId = messageIdCounter.current++;
           const completionMessage: ChatMessage = {
             id: completionMessageId,
-            sender: 'ai',
+            sender: "ai",
             text: getCompletionMessage(newTotalPoints),
             timestamp: new Date(),
           };
@@ -168,7 +172,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   const handlePhotoUpload = () => {
     // Имитация загрузки фото
     const currentQuestion = questions[currentQuestionIndex] || null;
-    if (currentQuestion?.type === 'photo') {
+    if (currentQuestion?.type === "photo") {
       handleSendAnswer();
     }
   };
@@ -178,7 +182,11 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   return (
     <div className="chat-with-ai">
       <div className="chat-header">
-        <div className="ai-avatar">🤖</div>
+        <img
+          className="ai-avatar"
+          alt={" "}
+          src={"src/assets/ai-icon.png"}
+        ></img>
         <div>
           <h3>ИИ-друг</h3>
           <p className="chat-status">Онлайн • Помогает тебе учиться</p>
@@ -189,32 +197,41 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`chat-message ${message.sender === 'ai' ? 'ai-message' : 'user-message'}`}
+            className={`chat-message ${message.sender === "ai" ? "ai-message" : "user-message"}`}
           >
-            {message.sender === 'ai' && (
-              <div className="message-avatar">🤖</div>
+            {message.sender === "ai" && (
+              <img
+                className="ai-avatar"
+                alt={" "}
+                src={"src/assets/ai-icon.png"}
+              ></img>
             )}
             <div className="message-content">
               <p className="message-text">{message.text}</p>
-              {message.pointsAwarded !== undefined && message.pointsAwarded > 0 && (
-                <span className="points-badge">+{message.pointsAwarded} баллов</span>
-              )}
-              {message.question && message.question.type === 'choice' && message.question.id === currentQuestion?.id && (
-                <div className="question-options">
-                  {message.question.options?.map((option, index) => (
-                    <button
-                      key={index}
-                      className={`option-btn ${selectedOption === index ? 'selected' : ''}`}
-                      onClick={() => setSelectedOption(index)}
-                      disabled={isWaitingForAnswer}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              )}
+              {message.pointsAwarded !== undefined &&
+                message.pointsAwarded > 0 && (
+                  <span className="points-badge">
+                    +{message.pointsAwarded} баллов
+                  </span>
+                )}
+              {message.question &&
+                message.question.type === "choice" &&
+                message.question.id === currentQuestion?.id && (
+                  <div className="question-options">
+                    {message.question.options?.map((option, index) => (
+                      <button
+                        key={index}
+                        className={`option-btn ${selectedOption === index ? "selected" : ""}`}
+                        onClick={() => setSelectedOption(index)}
+                        disabled={isWaitingForAnswer}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                )}
             </div>
-            {message.sender === 'user' && (
+            {message.sender === "user" && (
               <div className="message-avatar user-avatar">👤</div>
             )}
           </div>
@@ -224,18 +241,20 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
 
       {currentQuestion && currentQuestionIndex < questions.length && (
         <div className="chat-input-area">
-          {currentQuestion.type === 'text' && (
+          {currentQuestion.type === "text" && (
             <input
               type="text"
               className="chat-input"
               placeholder="Введите ваш ответ..."
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && !isWaitingForAnswer && handleSendAnswer()}
+              onKeyDown={(e) =>
+                e.key === "Enter" && !isWaitingForAnswer && handleSendAnswer()
+              }
               disabled={isWaitingForAnswer}
             />
           )}
-          {currentQuestion.type === 'photo' && (
+          {currentQuestion.type === "photo" && (
             <button
               className="photo-upload-btn"
               onClick={handlePhotoUpload}
@@ -244,16 +263,20 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
               📸 Загрузить фото
             </button>
           )}
-          {(currentQuestion.type === 'text' || currentQuestion.type === 'photo') && (
+          {(currentQuestion.type === "text" ||
+            currentQuestion.type === "photo") && (
             <button
               className="send-btn"
               onClick={handleSendAnswer}
-              disabled={isWaitingForAnswer || (currentQuestion.type === 'text' && !userInput.trim())}
+              disabled={
+                isWaitingForAnswer ||
+                (currentQuestion.type === "text" && !userInput.trim())
+              }
             >
               Отправить
             </button>
           )}
-          {currentQuestion.type === 'choice' && (
+          {currentQuestion.type === "choice" && (
             <button
               className="send-btn"
               onClick={handleSendAnswer}

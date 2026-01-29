@@ -4,6 +4,11 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-image: url('../assets/image 1.png'),
+  url('../assets/image 2.png');
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top 600px, right bottom 400px;
+  background-size: 400px;
 }
 
 .landing-main {
@@ -105,12 +110,21 @@ width: 100%;
 
 .team-card {
   text-align: center;
-  padding: 1.5rem;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.team-photo {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+.team-photo-img {
+  max-width: 170px;
+  max-height: 170px;
+  border-radius: 50%;
+  width: 170px; /* Фиксированная ширина */
+  height: 170px; /* Фиксированная высота */
+  object-fit: cover; /* Обрезает изображение, сохраняя пропорции */
+  object-position: center; /* Центрирует изображение в круге */
+  display: block;
 }
 
 .team-name {

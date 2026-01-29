@@ -1,9 +1,11 @@
+﻿import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 import storeRoutes from './routes/store.js';
 import aiRoutes from './routes/ai.js';
+import { initDb } from './db.js';
 
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
@@ -20,6 +22,17 @@ app.get('/health', (_req, res) => {
 
 const PORT = Number(process.env.PORT) || 3001;
 const HOST = process.env.HOST || '127.0.0.1';
-app.listen(PORT, HOST, () => {
-  console.log(`Mega School API listening on http://${HOST}:${PORT}`);
-});
+
+const startServer = async () => {
+  try {
+    await initDb();
+    app.listen(PORT, HOST, () => {
+      console.log(`Mega School API listening on http://${HOST}:${PORT}`);
+    });
+  } catch (err) {
+    console.error('Failed to init DB', err);
+    process.exit(1);
+  }
+};
+
+void startServer();

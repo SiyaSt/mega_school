@@ -1,6 +1,6 @@
-import { Router, Request, Response } from 'express';
+﻿import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { db, nextId } from '../data/db.js';
+import { pool } from '../db.js';
 import { signToken } from '../middleware/authMiddleware.js';
 import type { User, ChildProfile, JWTPayload } from '../types.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
@@ -23,57 +23,75 @@ router.post('/register', async (req: Request, res: Response) => {
       res.status(400).json({ error: 'Укажите логин и пароль' });
       return;
     }
-    if (db.loginIndex.has(login.trim().toLowerCase())) {
-      res.status(409).json({ error: 'Пользователь с таким логином уже существует' });
-      return;
-    }
 
-    const userId = nextId('user');
+    const loginValue = login.trim();
+    const loginLower = loginValue.toLowerCase();
     const passwordHash = await bcrypt.hash(password, 10);
-    const user: User = {
-      id: userId,
-      login: login.trim(),
-      passwordHash,
-      email: String(email || '').trim(),
-      role: 'parent',
-      createdAt: new Date(),
-    };
-    db.users.set(userId, user);
-    db.loginIndex.set(login.trim().toLowerCase(), userId);
 
-    let childProfile: ChildProfile | null = null;
-    if (child?.fullName?.trim()) {
-      const childId = nextId('child');
-      childProfile = {
-        id: childId,
-        userId,
-        fullName: child.fullName.trim(),
-        grade: String(child.grade || '').trim(),
-        subjectIds: Array.isArray(child.subjectIds) ? child.subjectIds : [],
-        createdAt: new Date(),
-      };
-      db.children.set(childId, childProfile);
-      db.pointsByChild.set(childId, 0);
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      const existing = await client.query('SELECT id FROM users WHERE LOWER(login) = $1', [loginLower]);
+      if (existing.rowCount) {
+        await client.query('ROLLBACK');
+        res.status(409).json({ error: 'Пользователь с таким логином уже существует' });
+        return;
+      }
+
+      const userRes = await client.query(
+        `INSERT INTO users (login, password_hash, email, role)
+         VALUES ($1, $2, $3, $4)
+         RETURNING id, login, email, role`,
+        [loginValue, passwordHash, String(email || '').trim(), 'parent']
+      );
+      const user = userRes.rows[0] as Pick<User, 'id' | 'login' | 'email' | 'role'>;
+
+      let childProfile: ChildProfile | null = null;
+      if (child?.fullName?.trim()) {
+        const childRes = await client.query(
+          `INSERT INTO children (user_id, full_name, grade, subject_ids)
+           VALUES ($1, $2, $3, $4)
+           RETURNING id, full_name, grade, subject_ids`,
+          [
+            user.id,
+            child.fullName.trim(),
+            String(child.grade || '').trim(),
+            Array.isArray(child.subjectIds) ? child.subjectIds : [],
+          ]
+        );
+        const childRow = childRes.rows[0] as { id: string; full_name: string; grade: string; subject_ids: string[] };
+        childProfile = {
+          id: childRow.id,
+          userId: user.id,
+          fullName: childRow.full_name,
+          grade: childRow.grade,
+          subjectIds: childRow.subject_ids,
+          createdAt: new Date(),
+        };
+        await client.query('INSERT INTO child_points (child_id, points) VALUES ($1, $2)', [childProfile.id, 0]);
+      }
+
+      await client.query('COMMIT');
+
+      const token = signToken({ userId: user.id, login: user.login, role: user.role });
+      res.status(201).json({
+        token,
+        user,
+        child: childProfile
+          ? {
+              id: childProfile.id,
+              fullName: childProfile.fullName,
+              grade: childProfile.grade,
+              subjectIds: childProfile.subjectIds,
+            }
+          : null,
+      });
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
     }
-
-    const token = signToken({ userId, login: user.login, role: user.role });
-    res.status(201).json({
-      token,
-      user: {
-        id: user.id,
-        login: user.login,
-        email: user.email,
-        role: user.role,
-      },
-      child: childProfile
-        ? {
-            id: childProfile.id,
-            fullName: childProfile.fullName,
-            grade: childProfile.grade,
-            subjectIds: childProfile.subjectIds,
-          }
-        : null,
-    });
   } catch (e) {
     console.error('register', e);
     res.status(500).json({ error: 'Ошибка при регистрации' });
@@ -87,24 +105,27 @@ router.post('/login', async (req: Request, res: Response) => {
       res.status(400).json({ error: 'Укажите логин и пароль' });
       return;
     }
-    const userId = db.loginIndex.get(login.trim().toLowerCase());
-    if (!userId) {
+    const loginLower = login.trim().toLowerCase();
+    const userRes = await pool.query(
+      'SELECT id, login, email, role, password_hash FROM users WHERE LOWER(login) = $1',
+      [loginLower]
+    );
+    if (!userRes.rowCount) {
       res.status(401).json({ error: 'Неверный логин или пароль' });
       return;
     }
-    const user = db.users.get(userId);
-    if (!user) {
-      res.status(401).json({ error: 'Неверный логин или пароль' });
-      return;
-    }
-    const ok = await bcrypt.compare(password, user.passwordHash);
+    const user = userRes.rows[0] as User & { password_hash: string };
+    const ok = await bcrypt.compare(password, user.password_hash);
     if (!ok) {
       res.status(401).json({ error: 'Неверный логин или пароль' });
       return;
     }
 
     const token = signToken({ userId: user.id, login: user.login, role: user.role });
-    const children = [...db.children.values()].filter((c) => c.userId === user.id);
+    const childrenRes = await pool.query(
+      'SELECT id, full_name, grade, subject_ids FROM children WHERE user_id = $1 ORDER BY created_at ASC',
+      [user.id]
+    );
     res.json({
       token,
       user: {
@@ -113,11 +134,11 @@ router.post('/login', async (req: Request, res: Response) => {
         email: user.email,
         role: user.role,
       },
-      children: children.map((c) => ({
+      children: childrenRes.rows.map((c) => ({
         id: c.id,
-        fullName: c.fullName,
+        fullName: c.full_name,
         grade: c.grade,
-        subjectIds: c.subjectIds,
+        subjectIds: c.subject_ids,
       })),
     });
   } catch (e) {
@@ -126,14 +147,18 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/me', authMiddleware, (req: Request, res: Response) => {
+router.get('/me', authMiddleware, async (req: Request, res: Response) => {
   const r = req as AuthRequest;
-  const user = db.users.get(r.user.userId);
-  if (!user) {
+  const userRes = await pool.query('SELECT id, login, email, role FROM users WHERE id = $1', [r.user.userId]);
+  if (!userRes.rowCount) {
     res.status(404).json({ error: 'Пользователь не найден' });
     return;
   }
-  const children = [...db.children.values()].filter((c) => c.userId === user.id);
+  const user = userRes.rows[0];
+  const childrenRes = await pool.query(
+    'SELECT id, full_name, grade, subject_ids FROM children WHERE user_id = $1 ORDER BY created_at ASC',
+    [user.id]
+  );
   res.json({
     user: {
       id: user.id,
@@ -141,11 +166,11 @@ router.get('/me', authMiddleware, (req: Request, res: Response) => {
       email: user.email,
       role: user.role,
     },
-    children: children.map((c) => ({
+    children: childrenRes.rows.map((c) => ({
       id: c.id,
-      fullName: c.fullName,
+      fullName: c.full_name,
       grade: c.grade,
-      subjectIds: c.subjectIds,
+      subjectIds: c.subject_ids,
     })),
   });
 });

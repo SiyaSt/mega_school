@@ -230,6 +230,13 @@ const fallbackSessions = new Map<string, { subjectId: string; topicName: string;
 
 const getEnv = (key: string) => (process.env[key] || '').trim();
 const hasYandexCreds = () => Boolean(getEnv('YANDEX_API_KEY') && getEnv('YANDEX_FOLDER_ID'));
+const logAiMode = () => {
+  if (hasYandexCreds()) {
+    console.log('AI mode: YandexGPT enabled');
+  } else {
+    console.warn('AI mode: fallback (missing YANDEX_API_KEY or YANDEX_FOLDER_ID)');
+  }
+};
 
 const buildModelUri = () => {
   const folderId = getEnv('YANDEX_FOLDER_ID');
@@ -327,6 +334,7 @@ const toPublicQuestion = (q: FallbackQuestion | AiQuestion): AiQuestion => ({
 });
 
 router.post('/start', async (req, res) => {
+  logAiMode();
   const body = req.body as StartRequestBody;
   const subjectId = (body.subjectId || 'default').toLowerCase();
   const subjectName = body.subjectName || 'предмет';
@@ -382,6 +390,7 @@ router.post('/start', async (req, res) => {
 });
 
 router.post('/answer', async (req, res) => {
+  logAiMode();
   const body = req.body as AnswerRequestBody;
   const subjectId = (body.subjectId || 'default').toLowerCase();
   const subjectName = body.subjectName || 'предмет';

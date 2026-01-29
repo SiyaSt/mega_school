@@ -1,49 +1,46 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { aiChatService, type AiQuestion } from '../../services/aiChatService';
-import './ChatWithAI.css';
+import React, { useState, useEffect, useRef } from "react";
+import type { Question, AIResponse } from "../../services/aiHelper";
+import {
+  checkAnswer,
+  getWelcomeMessage,
+  getCompletionMessage,
+} from "../../services/aiHelper";
+import "./ChatWithAI.css";
 
 interface ChatMessage {
   id: number;
-  sender: 'ai' | 'user';
+  sender: "ai" | "user";
   text: string;
   timestamp: Date;
-  question?: AiQuestion;
+  question?: Question;
   userAnswer?: string | number;
   pointsAwarded?: number;
 }
 
 interface ChatWithAIProps {
-  subjectId: string;
-  subjectName: string;
-  totalQuestions: number;
-  onTopicChange?: (topicName: string) => void;
+  questions: Question[];
+  topicName: string;
   onPointsChange: (points: number) => void;
   onComplete: (totalPoints: number) => void;
 }
 
 export const ChatWithAI: React.FC<ChatWithAIProps> = ({
-  subjectId,
-  subjectName,
-  totalQuestions,
-  onTopicChange,
+  questions,
+  topicName,
   onPointsChange,
   onComplete,
 }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState<AiQuestion | null>(null);
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isWaitingForAnswer, setIsWaitingForAnswer] = useState(false);
   const [, setTotalPoints] = useState(0);
-  const [topicName, setTopicName] = useState('');
-  const [sessionId, setSessionId] = useState<string | undefined>(undefined);
-  const [previousQuestions, setPreviousQuestions] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageIdCounter = useRef(0);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -51,99 +48,61 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   }, [messages]);
 
   useEffect(() => {
-    let isActive = true;
+    // Инициализация: приветственное сообщение и первое задание
+    if (questions.length === 0) return;
 
-    const startLesson = async () => {
-      messageIdCounter.current = 0;
-      setMessages([]);
-      setCurrentQuestionIndex(0);
-      setTotalPoints(0);
-      setUserInput('');
-      setSelectedOption(null);
-      setIsWaitingForAnswer(true);
-      setTopicName('');
-      setSessionId(undefined);
-      setPreviousQuestions([]);
-      setCurrentQuestion(null);
-
-      try {
-        const res = await aiChatService.startLesson({
-          subjectId,
-          subjectName,
-          totalQuestions,
-        });
-        if (!isActive) return;
-
-        setTopicName(res.topicName);
-        onTopicChange?.(res.topicName);
-        setSessionId(res.sessionId);
-        setCurrentQuestion(res.question);
-        setPreviousQuestions([res.question.question]);
-
-        const welcomeMsg: ChatMessage = {
-          id: messageIdCounter.current++,
-          sender: 'ai',
-          text: res.welcomeMessage,
-          timestamp: new Date(),
-        };
-
-        const firstQuestion: ChatMessage = {
-          id: messageIdCounter.current++,
-          sender: 'ai',
-          text: res.question.question,
-          timestamp: new Date(),
-          question: res.question,
-        };
-
-        setMessages([welcomeMsg, firstQuestion]);
-        setIsWaitingForAnswer(false);
-      } catch {
-        if (!isActive) return;
-        setMessages([
-          {
-            id: messageIdCounter.current++,
-            sender: 'ai',
-            text: 'Не удалось подключиться к ИИ. Попробуй позже.',
-            timestamp: new Date(),
-          },
-        ]);
-        setIsWaitingForAnswer(false);
-      }
+    messageIdCounter.current = 0;
+    const welcomeMsg: ChatMessage = {
+      id: messageIdCounter.current++,
+      sender: "ai",
+      text: getWelcomeMessage(topicName),
+      timestamp: new Date(),
     };
 
-    if (subjectId) {
-      void startLesson();
-    }
-
-    return () => {
-      isActive = false;
+    const firstQuestion: ChatMessage = {
+      id: messageIdCounter.current++,
+      sender: "ai",
+      text: questions[0]?.question || "",
+      timestamp: new Date(),
+      question: questions[0],
     };
-  }, [subjectId, subjectName, totalQuestions, onTopicChange]);
 
-  const handleSendAnswer = async () => {
+    setMessages([welcomeMsg, firstQuestion]);
+    setCurrentQuestionIndex(0);
+    setTotalPoints(0);
+    setUserInput("");
+    setSelectedOption(null);
+    setIsWaitingForAnswer(false);
+  }, [topicName, questions]);
+
+  const handleSendAnswer = () => {
     if (isWaitingForAnswer) return;
+
+    const currentQuestion = questions[currentQuestionIndex];
     if (!currentQuestion) return;
 
     let answer: string | number;
     let answerText: string;
-    let answerPayload: { type: 'choice' | 'text'; text?: string; index?: number };
 
-    if (currentQuestion.type === 'choice') {
+    if (currentQuestion.type === "choice") {
       if (selectedOption === null) return;
       answer = selectedOption;
-      answerText = currentQuestion.options?.[selectedOption] || '';
-      answerPayload = { type: 'choice', index: selectedOption, text: answerText };
-    } else {
+      answerText = currentQuestion.options?.[selectedOption] || "";
+    } else if (currentQuestion.type === "text") {
       if (!userInput.trim()) return;
       answer = userInput.trim();
       answerText = userInput.trim();
-      answerPayload = { type: 'text', text: answerText };
+    } else {
+      // photo type
+      answer = "photo";
+      answerText = "📸 Фото отправлено";
     }
 
+    // Добавляем сообщение пользователя
     const userMessageId = messageIdCounter.current++;
     const userMessage: ChatMessage = {
       id: userMessageId,
-      sender: 'user',
+      sender: "user",
       text: answerText,
       timestamp: new Date(),
       userAnswer: answer,
@@ -152,19 +111,9 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
     setMessages((prev) => [...prev, userMessage]);
     setIsWaitingForAnswer(true);
 
-    try {
-      const aiResponse = await aiChatService.answer({
-        sessionId,
-        subjectId,
-        subjectName,
-        topicName: topicName || subjectName,
-        questionIndex: currentQuestionIndex,
-        totalQuestions,
-        question: currentQuestion,
-        userAnswer: answerPayload,
-        previousQuestions,
-      });
-
+    // Имитация задержки ответа ИИ
+    setTimeout(() => {
+      const aiResponse: AIResponse = checkAnswer(currentQuestion, answer);
       let newTotalPoints = 0;
       setTotalPoints((prev) => {
         newTotalPoints = prev + aiResponse.pointsAwarded;
@@ -173,68 +122,71 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
       });
 
       const aiMessageId = messageIdCounter.current++;
-      const feedbackText = aiResponse.explanation
-        ? `${aiResponse.feedbackMessage}\n${aiResponse.explanation}`
-        : aiResponse.feedbackMessage;
       const aiMessage: ChatMessage = {
         id: aiMessageId,
-        sender: 'ai',
-        text: feedbackText,
+        sender: "ai",
+        text: aiResponse.message,
         timestamp: new Date(),
         pointsAwarded: aiResponse.pointsAwarded,
       };
 
       setMessages((prev) => [...prev, aiMessage]);
 
+      // Проверяем, есть ли следующее задание
       const nextIndex = currentQuestionIndex + 1;
-      if (aiResponse.nextQuestion && nextIndex < totalQuestions) {
-        const nextQuestionMessageId = messageIdCounter.current++;
-        const nextQuestionMessage: ChatMessage = {
-          id: nextQuestionMessageId,
-          sender: 'ai',
-          text: aiResponse.nextQuestion.question,
-          timestamp: new Date(),
-          question: aiResponse.nextQuestion,
-        };
-        setMessages((prev) => [...prev, nextQuestionMessage]);
-        setCurrentQuestionIndex(nextIndex);
-        setCurrentQuestion(aiResponse.nextQuestion);
-        setPreviousQuestions((prev) => [...prev, aiResponse.nextQuestion.question]);
-        setIsWaitingForAnswer(false);
-        setUserInput('');
-        setSelectedOption(null);
+      if (nextIndex < questions.length) {
+        setTimeout(() => {
+          const nextQuestion = questions[nextIndex];
+          const nextQuestionMessageId = messageIdCounter.current++;
+          const nextQuestionMessage: ChatMessage = {
+            id: nextQuestionMessageId,
+            sender: "ai",
+            text: nextQuestion.question,
+            timestamp: new Date(),
+            question: nextQuestion,
+          };
+          setMessages((prev) => [...prev, nextQuestionMessage]);
+          setCurrentQuestionIndex(nextIndex);
+          setIsWaitingForAnswer(false);
+          setUserInput("");
+          setSelectedOption(null);
+        }, 1000);
       } else {
-        const completionMessageText =
-          aiResponse.completionMessage ||
-          'Урок завершён! Ты отлично поработал!';
-        const completionMessageId = messageIdCounter.current++;
-        const completionMessage: ChatMessage = {
-          id: completionMessageId,
-          sender: 'ai',
-          text: completionMessageText,
-          timestamp: new Date(),
-        };
-        setMessages((prevMessages) => [...prevMessages, completionMessage]);
-        setIsWaitingForAnswer(false);
-        onComplete(newTotalPoints);
+        // Все задания завершены
+        setTimeout(() => {
+          const completionMessageId = messageIdCounter.current++;
+          const completionMessage: ChatMessage = {
+            id: completionMessageId,
+            sender: "ai",
+            text: getCompletionMessage(newTotalPoints),
+            timestamp: new Date(),
+          };
+          setMessages((prevMessages) => [...prevMessages, completionMessage]);
+          setIsWaitingForAnswer(false);
+          onComplete(newTotalPoints);
+        }, 1000);
       }
-    } catch {
-      const errorMessageId = messageIdCounter.current++;
-      const errorMessage: ChatMessage = {
-        id: errorMessageId,
-        sender: 'ai',
-        text: 'Не удалось получить ответ от ИИ. Попробуй ещё раз.',
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
-      setIsWaitingForAnswer(false);
+    }, 800);
+  };
+
+  const handlePhotoUpload = () => {
+    // Имитация загрузки фото
+    const currentQuestion = questions[currentQuestionIndex] || null;
+    if (currentQuestion?.type === "photo") {
+      handleSendAnswer();
     }
   };
+
+  const currentQuestion = questions[currentQuestionIndex] || null;
 
   return (
     <div className="chat-with-ai">
       <div className="chat-header">
-        <div className="ai-avatar">🤖</div>
+        <img
+          className="ai-avatar"
+          alt={" "}
+          src={"src/assets/ai-icon.png"}
+        ></img>
         <div>
           <h3>ИИ-друг</h3>
           <p className="chat-status">Онлайн • Помогает тебе учиться</p>
@@ -245,32 +197,41 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`chat-message ${message.sender === 'ai' ? 'ai-message' : 'user-message'}`}
+            className={`chat-message ${message.sender === "ai" ? "ai-message" : "user-message"}`}
           >
-            {message.sender === 'ai' && (
-              <div className="message-avatar">🤖</div>
+            {message.sender === "ai" && (
+              <img
+                className="ai-avatar"
+                alt={" "}
+                src={"src/assets/ai-icon.png"}
+              ></img>
             )}
             <div className="message-content">
               <p className="message-text">{message.text}</p>
-              {message.pointsAwarded !== undefined && message.pointsAwarded > 0 && (
-                <span className="points-badge">+{message.pointsAwarded} баллов</span>
-              )}
-              {message.question && message.question.type === 'choice' && message.question.id === currentQuestion?.id && (
-                <div className="question-options">
-                  {message.question.options?.map((option, index) => (
-                    <button
-                      key={index}
-                      className={`option-btn ${selectedOption === index ? 'selected' : ''}`}
-                      onClick={() => setSelectedOption(index)}
-                      disabled={isWaitingForAnswer}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              )}
+              {message.pointsAwarded !== undefined &&
+                message.pointsAwarded > 0 && (
+                  <span className="points-badge">
+                    +{message.pointsAwarded} баллов
+                  </span>
+                )}
+              {message.question &&
+                message.question.type === "choice" &&
+                message.question.id === currentQuestion?.id && (
+                  <div className="question-options">
+                    {message.question.options?.map((option, index) => (
+                      <button
+                        key={index}
+                        className={`option-btn ${selectedOption === index ? "selected" : ""}`}
+                        onClick={() => setSelectedOption(index)}
+                        disabled={isWaitingForAnswer}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                )}
             </div>
-            {message.sender === 'user' && (
+            {message.sender === "user" && (
               <div className="message-avatar user-avatar">👤</div>
             )}
           </div>
@@ -278,32 +239,47 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
         <div ref={messagesEndRef} />
       </div>
 
-      {currentQuestion && currentQuestionIndex < totalQuestions && (
+      {currentQuestion && currentQuestionIndex < questions.length && (
         <div className="chat-input-area">
-          {currentQuestion.type === 'text' && (
+          {currentQuestion.type === "text" && (
             <input
               type="text"
               className="chat-input"
               placeholder="Введите ваш ответ..."
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && !isWaitingForAnswer && void handleSendAnswer()}
+              onKeyDown={(e) =>
+                e.key === "Enter" && !isWaitingForAnswer && handleSendAnswer()
+              }
               disabled={isWaitingForAnswer}
             />
           )}
-          {currentQuestion.type === 'text' && (
+          {currentQuestion.type === "photo" && (
+            <button
+              className="photo-upload-btn"
+              onClick={handlePhotoUpload}
+              disabled={isWaitingForAnswer}
+            >
+              📸 Загрузить фото
+            </button>
+          )}
+          {(currentQuestion.type === "text" ||
+            currentQuestion.type === "photo") && (
             <button
               className="send-btn"
-              onClick={() => void handleSendAnswer()}
-              disabled={isWaitingForAnswer || !userInput.trim()}
+              onClick={handleSendAnswer}
+              disabled={
+                isWaitingForAnswer ||
+                (currentQuestion.type === "text" && !userInput.trim())
+              }
             >
               Отправить
             </button>
           )}
-          {currentQuestion.type === 'choice' && (
+          {currentQuestion.type === "choice" && (
             <button
               className="send-btn"
-              onClick={() => void handleSendAnswer()}
+              onClick={handleSendAnswer}
               disabled={isWaitingForAnswer || selectedOption === null}
             >
               Отправить ответ

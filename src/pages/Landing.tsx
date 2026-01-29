@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/common/Button";
 import { Card } from "../components/common/Card";
 import "./Landing.css";
-
+import videoBg from "../assets/dbltj.mp4";
 import videoIcon from "../assets/video-icon.png";
 import aiIcon from "../assets/ai-icon.png";
 import assignmentIcon from "../assets/assignment-icon.png";
@@ -105,25 +105,25 @@ export const Landing: React.FC = () => {
       <div className="landing-main">
         {/* Hero Block */}
         <section className="hero">
-          <div className="hero-content">
-            <h1 className="hero-title">
-              Учись с удовольствием вместе с ИИ-другом!
-            </h1>
-            <p className="hero-description">
-              Интерактивная платформа для школьников, где обучение превращается
-              в увлекательное приключение. Смотри видео-уроки, выполняй задания
-              с поддержкой ИИ-помощника и зарабатывай баллы за свои достижения.
-            </p>
-            <Button
-              size="large"
-              onClick={() => navigate("/trial")}
-              className="hero-cta"
-            >
-              Попробовать бесплатно
-            </Button>
-          </div>
+          <video autoPlay muted loop playsInline className="hero-video-bg">
+            <source src={videoBg} type="video/mp4" />
+            Ваш браузер не поддерживает видео.
+          </video>
+          <Button
+            size="large"
+            onClick={() => navigate("/trial")}
+            className="hero-cta"
+          >
+            Попробовать бесплатно
+          </Button>
         </section>
-
+        <Button
+          size="large"
+          onClick={() => navigate("/trial")}
+          className="hero-cta"
+        >
+          Попробовать бесплатно
+        </Button>
         {/* How Learning Works */}
         <section className="learning-steps">
           <h2 className="section-title">Как будет проходить обучение</h2>

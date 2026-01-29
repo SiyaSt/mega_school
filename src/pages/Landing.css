@@ -7,7 +7,7 @@
   background-image: url('../assets/image 1.png'),
   url('../assets/image 2.png');
   background-repeat: no-repeat, no-repeat;
-  background-position: left top 600px, right bottom 400px;
+  background-position: left top 1000px, right bottom 400px;
   background-size: 400px;
 }
 
@@ -21,12 +21,23 @@
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 24px;
-  padding: 4rem 2rem;
-  margin-bottom: 4rem;
+  width: 100%;
   text-align: center;
   color: white;
+  height: 120vh;
+}
+
+.hero-video-bg {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 80%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+
 }
 
 .hero-content {
@@ -48,7 +59,10 @@
 }
 
 .hero-cta {
-  margin-top: 1rem;
+  position: absolute;
+  top: 125%;
+  left: 37%;
+
 }
 
 /* Learning Steps */

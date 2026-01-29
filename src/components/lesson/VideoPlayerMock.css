@@ -1,11 +1,12 @@
 .video-player-mock {
   width: 100%;
   max-width: 400px;
+  height: 565px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background: white;
 }
 
 .video-header {
@@ -16,13 +17,13 @@
 .video-subject {
   font-size: 1.5em;
   margin: 0 0 8px 0;
-  color: #646cff;
+  color: #301855;
 }
 
 .video-topic {
   font-size: 1em;
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: #333333;
 }
 
 .video-container {
@@ -38,8 +39,6 @@
 }
 
 .video-placeholder {
-  aspect-ratio: 9 / 16; /* Вертикальное видео как TikTok */
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -49,24 +48,9 @@
   color: white;
   position: relative;
   overflow: hidden;
+  height: 440px;
 }
 
-.video-placeholder::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 10px,
-    rgba(255, 255, 255, 0.1) 10px,
-    rgba(255, 255, 255, 0.1) 20px
-  );
-  opacity: 0.3;
-}
 
 .video-icon {
   font-size: 4em;

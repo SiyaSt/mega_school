@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap');
+
+
 .lesson-play {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
 }
 
 .lesson-play-main {
@@ -25,18 +27,20 @@
 
 .lesson-title-section {
   flex: 1;
+  font-family: 'Press Start 2P', cursive;
+  color: #333;
 }
 
 .lesson-subject {
   font-size: 2em;
   margin: 0 0 8px 0;
-  color: white;
+  color: #333;
 }
 
 .lesson-topic {
   font-size: 1.2em;
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(51, 51, 51, 0.61);
 }
 
 .exit-btn {
@@ -71,7 +75,7 @@
 }
 
 .points-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(100, 108, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 24px;
 }

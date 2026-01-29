@@ -1,47 +1,47 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../components/common/Button';
-import { Card } from '../components/common/Card';
-import { useAuth } from '../context/AuthContext';
-import './Auth.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "../components/common/Button";
+import { Card } from "../components/common/Card";
+import { useAuth } from "../context/AuthContext";
+import "./Auth.css";
 
 const SUBJECTS = [
-  { id: 'russian', name: 'Русский язык' },
-  { id: 'algebra', name: 'Алгебра' },
-  { id: 'geometry', name: 'Геометрия' },
-  { id: 'math', name: 'Математика (до 7 класса)' },
-  { id: 'history', name: 'История' },
+  { id: "russian", name: "Русский язык" },
+  { id: "algebra", name: "Алгебра" },
+  { id: "geometry", name: "Геометрия" },
+  { id: "math", name: "Математика (до 7 класса)" },
+  { id: "history", name: "История" },
 ];
 
 export const Register: React.FC = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
 
-  const [loginName, setLoginName] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordRepeat, setPasswordRepeat] = useState('');
-  const [email, setEmail] = useState('');
-  const [childFullName, setChildFullName] = useState('');
-  const [childGrade, setChildGrade] = useState('');
+  const [loginName, setLoginName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordRepeat, setPasswordRepeat] = useState("");
+  const [email, setEmail] = useState("");
+  const [childFullName, setChildFullName] = useState("");
+  const [childGrade, setChildGrade] = useState("");
   const [subjectIds, setSubjectIds] = useState<string[]>([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const toggleSubject = (id: string) => {
     setSubjectIds((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id],
     );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     if (!loginName.trim() || !password) {
-      setError('Укажите логин и пароль');
+      setError("Укажите логин и пароль");
       return;
     }
     if (password !== passwordRepeat) {
-      setError('Пароли не совпадают');
+      setError("Пароли не совпадают");
       return;
     }
     setLoading(true);
@@ -53,15 +53,15 @@ export const Register: React.FC = () => {
         child:
           childFullName.trim() || childGrade.trim()
             ? {
-                fullName: childFullName.trim() || 'Ребёнок',
-                grade: childGrade.trim() || '',
+                fullName: childFullName.trim() || "Ребёнок",
+                grade: childGrade.trim() || "",
                 subjectIds,
               }
             : undefined,
       });
-      navigate('/dashboard/parent', { replace: true });
+      navigate("/dashboard/parent", { replace: true });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ошибка регистрации');
+      setError(err instanceof Error ? err.message : "Ошибка регистрации");
     } finally {
       setLoading(false);
     }
@@ -71,7 +71,7 @@ export const Register: React.FC = () => {
     <div className="auth-page">
       <div className="auth-main">
         <Card className="auth-card auth-card-wide">
-          <h1 className="auth-title">Регистрация родителя</h1>
+          <h1 className="auth-title">Регистрация</h1>
           <form onSubmit={handleSubmit} className="auth-form">
             {error && <div className="auth-error">{error}</div>}
             <div className="auth-section">
@@ -169,7 +169,7 @@ export const Register: React.FC = () => {
             </div>
 
             <Button type="submit" disabled={loading} className="auth-submit">
-              {loading ? 'Регистрация…' : 'Зарегистрироваться'}
+              {loading ? "Регистрация…" : "Зарегистрироваться"}
             </Button>
           </form>
           <p className="auth-footer">

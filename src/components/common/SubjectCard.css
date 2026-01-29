@@ -1,27 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap');
+
 .subject-card {
   cursor: pointer;
-  min-height: 120px;
+  height: 200px;
+  width: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  color: white !important;
+  background: #ff9a02;
+  color: #333;
   border: none;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  font-family: 'Press Start 2P', cursive;
 }
 
 .subject-card:hover {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: linear-gradient(190deg, #ff9a02 50%, #fc701a 100%);
 }
 
 .subject-card-content {
   text-align: center;
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-.subject-icon {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
+.subject-icon-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .subject-name {

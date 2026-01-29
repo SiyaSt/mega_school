@@ -1,14 +1,19 @@
-import React from 'react';
-import { Card } from './Card';
-import './SubjectCard.css';
+// components/common/SubjectCard.tsx
+import React from "react";
+import { Card } from "./Card";
+import "./SubjectCard.css";
 
 interface SubjectCardProps {
   subject: string;
-  icon?: string;
-  onClick: () => void;
+  icon?: React.ReactNode; // Теперь принимает React элемент (img)
+  onClick?: () => void;
 }
 
-export const SubjectCard: React.FC<SubjectCardProps> = ({ subject, icon, onClick }) => {
+export const SubjectCard: React.FC<SubjectCardProps> = ({
+  subject,
+  icon,
+  onClick,
+}) => {
   return (
     <Card className="subject-card" onClick={onClick}>
       <div className="subject-card-content">

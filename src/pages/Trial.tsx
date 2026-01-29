@@ -5,16 +5,13 @@ import { Card } from "../components/common/Card";
 import "./Trial.css";
 
 import russianIcon from "../assets/russian-icon.png";
-import algebraIcon from "../assets/algebra-icon.png";
-import geometryIcon from "../assets/assignment-icon.png";
+
 import mathIcon from "../assets/math-icon.png";
 import historyIcon from "../assets/history-icon.png";
 
 const subjects = [
   { id: "russian", name: "Русский язык", icon: russianIcon },
-  { id: "algebra", name: "Алгебра", icon: algebraIcon },
-  { id: "geometry", name: "Геометрия", icon: geometryIcon },
-  { id: "math", name: "Математика (до 7 класса)", icon: mathIcon },
+  { id: "math", name: "Математика 5-7 классы", icon: mathIcon },
   { id: "history", name: "История", icon: historyIcon },
 ];
 
@@ -22,7 +19,7 @@ export const Trial: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSubjectSelect = (subjectId: string) => {
-    navigate(`/lesson/setup?subject=${subjectId}`);
+    navigate(`/lesson/play?subject=${subjectId}`);
   };
 
   return (

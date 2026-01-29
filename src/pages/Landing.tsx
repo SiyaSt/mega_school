@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/common/Button";
 import { Card } from "../components/common/Card";
@@ -105,9 +105,19 @@ export const Landing: React.FC = () => {
       <div className="landing-main">
         {/* Hero Block */}
         <section className="hero">
-          <video autoPlay muted loop playsInline className="hero-video-bg">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="hero-video-bg"
+            onCanPlay={(e) => {
+              const video = e.target as HTMLVideoElement;
+              video.defaultPlaybackRate = 0.7;
+              video.playbackRate = 0.7;
+            }}
+          >
             <source src={videoBg} type="video/mp4" />
-            Ваш браузер не поддерживает видео.
           </video>
           <Button
             size="large"

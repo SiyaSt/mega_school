@@ -75,24 +75,6 @@
   justify-items: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  .trial-title {
-    color: rgba(255, 255, 255, 0.87);
-  }
-  
-  .trial-description h2 {
-    color: rgba(255, 255, 255, 0.87);
-  }
-  
-  .trial-description p {
-    color: rgba(255, 255, 255, 0.7);
-  }
-  
-  .selection-title {
-    color: rgba(255, 255, 255, 0.87);
-  }
-}
-
 @media (max-width: 768px) {
   .trial-title {
     font-size: 2rem;

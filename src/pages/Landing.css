@@ -32,7 +32,7 @@
   position: absolute;
   top: 55%;
   left: 50%;
-  width: 100%;
+  max-width: 100%;
   min-height: 80%;
 
   height: auto;
@@ -260,28 +260,6 @@
 }
 
 /* ============ СУЩЕСТВУЮЩИЕ СТИЛИ БЕЗ ИЗМЕНЕНИЙ ============ */
-
-@media (prefers-color-scheme: dark) {
-  .section-title {
-    color: rgba(255, 255, 255, 0.87);
-  }
-
-  .step-title {
-    color: rgba(255, 255, 255, 0.87);
-  }
-
-  .step-description {
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  .team-name {
-    color: rgba(255, 255, 255, 0.87);
-  }
-
-  .team-role {
-    color: rgba(255, 255, 255, 0.7);
-  }
-}
 
 @media (max-width: 768px) {
   .hero {

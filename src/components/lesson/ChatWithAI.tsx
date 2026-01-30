@@ -6,7 +6,9 @@ import {
   getCompletionMessage,
 } from "../../services/aiHelper";
 import "./ChatWithAI.css";
-import lo from "../../assets/image 12.png";
+import neo from "../../assets/image 12.png";
+import kai from "../../assets/image 29.png";
+import piksi from "../../assets/image 31.png";
 
 interface ChatMessage {
   id: number;
@@ -23,13 +25,30 @@ interface ChatWithAIProps {
   topicName: string;
   onPointsChange: (points: number) => void;
   onComplete: (totalPoints: number) => void;
+  keyName: string;
 }
+
+const avatars = {
+  geography: {
+    name: "KAI",
+    icon: kai,
+  },
+  math: {
+    name: "NEO",
+    icon: neo,
+  },
+  history: {
+    name: "PIKSI",
+    icon: piksi,
+  },
+};
 
 export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   questions,
   topicName,
   onPointsChange,
   onComplete,
+  keyName,
 }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -175,9 +194,9 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   return (
     <div className="chat-with-ai">
       <div className="chat-header">
-        <img className="ai-avatar" alt={" "} src={lo}></img>
+        <img className="ai-avatar" alt={" "} src={avatars[keyName].icon}></img>
         <div>
-          <h3 className="ai-avatar-name">НЕО</h3>
+          <h3 className="ai-avatar-name">{avatars[keyName].name}</h3>
           <p className="chat-status">Онлайн • Помогает тебе учиться</p>
         </div>
       </div>
@@ -189,7 +208,11 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
             className={`chat-message ${message.sender === "ai" ? "ai-message" : "user-message"}`}
           >
             {message.sender === "ai" && (
-              <img className="ai-avatar" alt={" "} src={lo}></img>
+              <img
+                className="ai-avatar"
+                alt={" "}
+                src={avatars[keyName].icon}
+              ></img>
             )}
             <div className="message-content">
               <p className="message-text">{message.text}</p>

@@ -10,7 +10,7 @@ import mathIcon from "../assets/math-icon.png";
 import historyIcon from "../assets/history-icon.png";
 
 const subjects = [
-  { id: "russian", name: "Русский язык", icon: russianIcon },
+  { id: "geography", name: "География", icon: russianIcon },
   { id: "math", name: "Математика 5-7 классы", icon: mathIcon },
   { id: "history", name: "История", icon: historyIcon },
 ];

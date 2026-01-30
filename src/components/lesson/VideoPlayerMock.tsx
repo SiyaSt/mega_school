@@ -1,15 +1,25 @@
 import React from "react";
 import "./VideoPlayerMock.css";
-import videoBg from "../../assets/IMG_3634 (2).mp4";
+import math from "../../assets/IMG_3634 (2).mp4";
+import geography from "../../assets/IMG_3670.mp4";
+import history from "../../assets/IMG_3651.mp4";
 
 interface VideoPlayerMockProps {
   subjectName: string;
+  keyName: string;
   topicName: string;
 }
+
+const video = {
+  math: math,
+  geography: geography,
+  history: history,
+};
 
 export const VideoPlayerMock: React.FC<VideoPlayerMockProps> = ({
   subjectName,
   topicName,
+  keyName,
 }) => {
   return (
     <div className="video-player-mock">
@@ -30,7 +40,7 @@ export const VideoPlayerMock: React.FC<VideoPlayerMockProps> = ({
               disablePictureInPicture
               controlsList="nodownload nofullscreen noremoteplayback"
             >
-              <source src={videoBg} type="video/mp4" />
+              <source src={video[keyName]} type="video/mp4" />
             </video>
           </div>
         </div>

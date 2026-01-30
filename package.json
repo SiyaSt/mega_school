@@ -1,5 +1,5 @@
 {
-  "name": "mega_school",
+  "name": "edu_kids",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -55,5 +55,5 @@
     "vite": "^7.2.4",
     "vitest": "^2.1.0"
   },
-  "homepage": "https://SiyaSt.github.io/mega_school/"
+  "homepage": "https://SiyaSt.github.io/edu_kids/"
 }

@@ -10,10 +10,10 @@ export default [
   {
     languageOptions: {
       globals: Object.fromEntries(
-          Object.entries(globals.browser).map(([key, value]) => [
-            key.trim(),
-            value,
-          ])
+        Object.entries(globals.browser).map(([key, value]) => [
+          key.trim(),
+          value,
+        ]),
       ),
     },
   },
@@ -25,6 +25,10 @@ export default [
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       "react/jsx-no-useless-fragment": ["error", { allowExpressions: true }],
+      // Разрешаем использование типа 'any'
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
     },
   },
 ];

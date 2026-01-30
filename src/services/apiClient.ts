@@ -1,8 +1,8 @@
-const TOKEN_KEY = 'mega_school_token';
+const TOKEN_KEY = "edu_kids_token";
 
 const getBaseUrl = () => {
-  if (import.meta.env.DEV) return '/api';
-  return (import.meta.env.VITE_API_URL as string) || '/api';
+  if (import.meta.env.DEV) return "/api";
+  return (import.meta.env.VITE_API_URL as string) || "/api";
 };
 
 export function getToken(): string | null {
@@ -19,19 +19,21 @@ export function clearToken(): void {
 
 export async function apiRequest<T>(
   path: string,
-  options: { method?: string; body?: object; headers?: HeadersInit } = {}
+  options: { method?: string; body?: object; headers?: HeadersInit } = {},
 ): Promise<T> {
-  const { body, method = 'GET', headers: optHeaders } = options;
+  const { body, method = "GET", headers: optHeaders } = options;
   const base = getBaseUrl();
-  const url = path.startsWith('http') ? path : `${base}${path.startsWith('/') ? path : `/${path}`}`;
+  const url = path.startsWith("http")
+    ? path
+    : `${base}${path.startsWith("/") ? path : `/${path}`}`;
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...(typeof optHeaders === 'object' && !(optHeaders instanceof Headers)
+    "Content-Type": "application/json",
+    ...(typeof optHeaders === "object" && !(optHeaders instanceof Headers)
       ? (optHeaders as Record<string, string>)
       : {}),
   };
   const token = getToken();
-  if (token) headers['Authorization'] = `Bearer ${token}`;
+  if (token) headers["Authorization"] = `Bearer ${token}`;
 
   const init: RequestInit = {
     method,
@@ -50,7 +52,8 @@ export async function apiRequest<T>(
   }
 
   if (!res.ok) {
-    const err = (data as { error?: string })?.error ?? res.statusText ?? 'Ошибка запроса';
+    const err =
+      (data as { error?: string })?.error ?? res.statusText ?? "Ошибка запроса";
     throw new Error(err);
   }
 
@@ -58,6 +61,7 @@ export async function apiRequest<T>(
 }
 
 export const api = {
-  get: <T>(path: string) => apiRequest<T>(path, { method: 'GET' }),
-  post: <T>(path: string, body?: object) => apiRequest<T>(path, { method: 'POST', body }),
+  get: <T>(path: string) => apiRequest<T>(path, { method: "GET" }),
+  post: <T>(path: string, body?: object) =>
+    apiRequest<T>(path, { method: "POST", body }),
 };

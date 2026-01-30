@@ -70,7 +70,6 @@ export const Store: React.FC = () => {
             <Card key={item.id} className="store-item-card">
               <h3>{item.name}</h3>
               <p className="store-item-desc">{item.description}</p>
-              <p className="store-item-price">{item.priceInPoints} баллов</p>
               <Button
                 disabled={points < item.priceInPoints || purchasingId !== null}
                 onClick={() => handlePurchase(item)}

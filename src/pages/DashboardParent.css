@@ -16,10 +16,11 @@
   font-size: 2rem;
   margin: 0 0 1.5rem;
   color: #333;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #333 0%, #333 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-family: 'Press Start 2P', cursive;
 }
 
 .parent-child-card,
@@ -50,4 +51,14 @@
 .parent-subscription {
   color: #888;
   font-size: 0.95rem;
+}
+
+.dashboard-parent .btn-outline {
+  color: #ff9a02;
+  border-color: #ff9a02;
+}
+
+.dashboard-parent .btn-outline:hover {
+  background: #ff9a02;
+  color: #333;
 }

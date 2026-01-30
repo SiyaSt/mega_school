@@ -25,10 +25,10 @@ function createDb(): Db {
 
   // Seed store items
   const items: Omit<StoreItem, 'id'>[] = [
-    { name: 'Футболка Mega School', description: 'Стильная футболка с логотипом', priceInPoints: 150 },
+    { name: 'Футболка EduKids', description: 'Стильная футболка с логотипом', priceInPoints: 150 },
     { name: 'Значок "Отличник"', description: 'Ачивка за старание', priceInPoints: 50 },
     { name: 'Оформление профиля "Звёздное"', description: 'Уникальный стиль профиля', priceInPoints: 200 },
-    { name: 'Блокнот Mega School', description: 'Для заметок и решений', priceInPoints: 80 },
+    { name: 'Блокнот Edukids', description: 'Для заметок и решений', priceInPoints: 80 },
     { name: 'Рюкзак школьный', description: 'Символический рюкзак в профиле', priceInPoints: 300 },
   ];
   items.forEach((item, i) => {

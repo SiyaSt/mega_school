@@ -7,7 +7,7 @@ export const Footer: React.FC = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-section">
-          <h3>Mega School</h3>
+          <h3>EduKids</h3>
           <p>Интерактивная платформа для обучения с ИИ-другом</p>
         </div>
         <div className="footer-section">

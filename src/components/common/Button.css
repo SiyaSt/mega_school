@@ -41,12 +41,12 @@ a.btn {
 
 .btn-outline {
   background: transparent;
-  color: #667eea;
-  border: 2px solid #667eea;
+  color: #ff9a02;
+  border: 2px solid #ff9a02;
 }
 
 .btn-outline:hover {
-  background: #667eea;
+  background: #ff9a02;
   color: white;
 }
 

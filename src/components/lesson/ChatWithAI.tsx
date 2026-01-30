@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import type { Question, AIResponse } from "../../services/aiHelper";
 import {
   checkAnswer,
@@ -55,6 +55,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   const [userInput, setUserInput] = useState("");
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isWaitingForAnswer, setIsWaitingForAnswer] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const [, setTotalPoints] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageIdCounter = useRef(0);
@@ -85,10 +86,11 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
     setUserInput("");
     setSelectedOption(null);
     setIsWaitingForAnswer(false);
+    setIsCompleted(false);
   }, [topicName, questions]);
 
   const handleSendAnswer = () => {
-    if (isWaitingForAnswer) return;
+    if (isWaitingForAnswer || isCompleted) return;
 
     const currentQuestion = questions[currentQuestionIndex];
     if (!currentQuestion) return;
@@ -175,6 +177,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
           };
           setMessages((prevMessages) => [...prevMessages, completionMessage]);
           setIsWaitingForAnswer(false);
+          setIsCompleted(true);
           onComplete(newTotalPoints);
         }, 1000);
       }
@@ -184,7 +187,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   const handlePhotoUpload = () => {
     // Имитация загрузки фото
     const currentQuestion = questions[currentQuestionIndex] || null;
-    if (currentQuestion?.type === "photo") {
+    if (!isCompleted && currentQuestion?.type === "photo") {
       handleSendAnswer();
     }
   };
@@ -208,20 +211,13 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
             className={`chat-message ${message.sender === "ai" ? "ai-message" : "user-message"}`}
           >
             {message.sender === "ai" && (
-              <img
-                className="ai-avatar"
-                alt={" "}
-                src={avatars[keyName].icon}
-              ></img>
+              <img className="ai-avatar" alt={" "} src={avatars[keyName].icon}></img>
             )}
             <div className="message-content">
               <p className="message-text">{message.text}</p>
-              {message.pointsAwarded !== undefined &&
-                message.pointsAwarded > 0 && (
-                  <span className="points-badge">
-                    +{message.pointsAwarded} баллов
-                  </span>
-                )}
+              {message.pointsAwarded !== undefined && message.pointsAwarded > 0 && (
+                <span className="points-badge">+{message.pointsAwarded} баллов</span>
+              )}
               {message.question &&
                 message.question.type === "choice" &&
                 message.question.id === currentQuestion?.id && (
@@ -231,7 +227,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
                         key={index}
                         className={`option-btn ${selectedOption === index ? "selected" : ""}`}
                         onClick={() => setSelectedOption(index)}
-                        disabled={isWaitingForAnswer}
+                        disabled={isWaitingForAnswer || isCompleted}
                       >
                         {option}
                       </button>
@@ -247,7 +243,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
         <div ref={messagesEndRef} />
       </div>
 
-      {currentQuestion && currentQuestionIndex < questions.length && (
+      {currentQuestion && currentQuestionIndex < questions.length && !isCompleted && (
         <div className="chat-input-area">
           {currentQuestion.type === "text" && (
             <input
@@ -256,9 +252,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
               placeholder="Введите ваш ответ..."
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              onKeyDown={(e) =>
-                e.key === "Enter" && !isWaitingForAnswer && handleSendAnswer()
-              }
+              onKeyDown={(e) => e.key === "Enter" && !isWaitingForAnswer && handleSendAnswer()}
               disabled={isWaitingForAnswer}
             />
           )}
@@ -271,15 +265,11 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
               📸 Загрузить фото
             </button>
           )}
-          {(currentQuestion.type === "text" ||
-            currentQuestion.type === "photo") && (
+          {(currentQuestion.type === "text" || currentQuestion.type === "photo") && (
             <button
               className="send-btn"
               onClick={handleSendAnswer}
-              disabled={
-                isWaitingForAnswer ||
-                (currentQuestion.type === "text" && !userInput.trim())
-              }
+              disabled={isWaitingForAnswer || (currentQuestion.type === "text" && !userInput.trim())}
             >
               Отправить
             </button>

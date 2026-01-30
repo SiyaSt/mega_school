@@ -17,9 +17,10 @@
   text-align: center;
   margin: 0 0 0.5rem;
   color: #333;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(#333, #333);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-family: 'Press Start 2P', cursive;
   background-clip: text;
 }
 

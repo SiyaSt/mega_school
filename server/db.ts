@@ -79,10 +79,10 @@ export async function initDb(): Promise<void> {
     const { rows } = await client.query('SELECT COUNT(*)::int AS count FROM store_items');
     if (rows[0]?.count === 0) {
       const seed = [
-        { name: 'Футболка Mega School', description: 'Стильная футболка с логотипом', price: 150 },
+        { name: 'Футболка Edukids', description: 'Стильная футболка с логотипом', price: 150 },
         { name: 'Значок "Отличник"', description: 'Ачивка за старание', price: 50 },
         { name: 'Оформление профиля "Звёздное"', description: 'Уникальный стиль профиля', price: 200 },
-        { name: 'Блокнот Mega School', description: 'Для заметок и решений', price: 80 },
+        { name: 'Блокнот Edukids', description: 'Для заметок и решений', price: 80 },
         { name: 'Рюкзак школьный', description: 'Символический рюкзак в профиле', price: 300 },
       ];
       for (const item of seed) {

@@ -10,6 +10,7 @@
   background-repeat: no-repeat, no-repeat;
   background-position: left -20px top 98vh, right bottom 40vh;
   background-size: 400px;
+  overflow-x: hidden;
 }
 
 .landing-main {
@@ -22,33 +23,41 @@
 
 /* Hero Section */
 .hero {
-  width: 100%;
+  width: 100vw;
   text-align: center;
   color: white;
-  height: 120vh;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  margin-left: calc(50% - 50vw);
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 110px;
+  margin-bottom: 3rem;
 }
 
 .hero-video-bg {
   position: absolute;
-  top: 55%;
-  left: 50%;
-  max-width: 100%;
-  min-height: 80%;
-
-  height: auto;
-  transform: translate(-50%, -50%);
-  z-index: 100;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: none;
+  z-index: 0;
 }
 
 .hero-cta {
-  position: absolute;
-  top: 125%;
-  left: 35%;
+  position: relative;
+  z-index: 1;
 }
 
 /* Learning Steps */
 .learning-steps {
   margin-bottom: 4rem;
+  position: relative;
+  z-index: 1;
 }
 
 .section-title {
@@ -90,6 +99,28 @@
 .step-description {
   color: #666;
   line-height: 1.6;
+}
+
+/* About Section */
+.about-section {
+  margin-bottom: 4rem;
+}
+
+.about-card {
+  padding: 2rem;
+}
+
+.about-text {
+  color: #4a4a4a;
+  line-height: 1.7;
+  font-size: 1.1rem;
+  margin: 0 0 1rem;
+}
+
+.about-subtitle {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 1.4rem;
+  color: #333;
 }
 
 /* Team Section */
@@ -135,6 +166,31 @@
   margin: 0;
 }
 
+/* Pricing Section */
+.pricing-section {
+  margin-bottom: 4rem;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+.pricing-card {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pricing-img {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  display: block;
+}
+
 /* ============ АДАПТИВНОСТЬ ДЛЯ НОУТБУКОВ ============ */
 
 /* Ноутбуки 1024px - 1280px */
@@ -144,12 +200,10 @@
   }
 
   .hero {
-    height: 110vh;
+    height: 100vh;
   }
 
   .hero-cta {
-    top: 120%;
-    left: 35%;
     font-size: 1rem;
     padding: 12px 24px;
   }
@@ -205,12 +259,11 @@
   }
 
   .hero {
-    height: 100vh;
+    height: 95vh;
   }
 
   .hero-cta {
-    top: 115%;
-    left: 30%;
+    margin: 0 auto;
     font-size: 0.95rem;
     padding: 10px 20px;
   }
@@ -265,14 +318,15 @@
 @media (max-width: 768px) {
   .hero {
     padding: 2rem 1rem;
-    height: 90vh;
+    height: 80vh;
+  }
+
+  .hero-video-bg {
+    display: block;
   }
 
   .hero-cta {
-    position: relative;
-    top: auto;
-    left: auto;
-    margin: 2rem auto 0;
+    margin: 0 auto;
   }
 
   .hero-title {
@@ -291,7 +345,60 @@
     grid-template-columns: 1fr;
   }
 
+  .about-card {
+    padding: 1.5rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+  }
+
+  .about-subtitle {
+    font-size: 1.2rem;
+  }
+
   .team-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .landing-main {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-card {
+    padding: 1.25rem;
+  }
+
+  .about-card {
+    padding: 1.25rem;
+  }
+
+  .about-text {
+    font-size: 0.95rem;
+  }
+
+  .about-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+
+  .team-photo-img {
+    width: 120px;
+    height: 120px;
   }
 }

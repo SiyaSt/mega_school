@@ -125,6 +125,25 @@
 
 
 /* Адаптивность */
+@media (max-width: 1325px) {
+  .header__inner {
+    flex-wrap: wrap;
+    height: auto;
+    gap: 0.5rem 1.5rem;
+    padding: 10px 20px;
+  }
+
+  .logo {
+    margin-right: auto;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .header__inner {
     flex-direction: column;

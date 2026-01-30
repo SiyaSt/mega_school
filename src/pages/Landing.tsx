@@ -19,6 +19,9 @@ import member7 from "../assets/member-7.jpg";
 import member8 from "../assets/member-8.jpg";
 import member9 from "../assets/member-9.jpg";
 import member10 from "../assets/member-10.jpg";
+import tariffBase from "../assets/Тариф баз..png";
+import tariffStandard from "../assets/Тариф станд.png";
+import tariffPremium from "../assets/Тариф прем.png";
 
 const teamMembers = [
   {
@@ -119,21 +122,7 @@ export const Landing: React.FC = () => {
           >
             <source src={videoBg} type="video/mp4" />
           </video>
-          <Button
-            size="large"
-            onClick={() => navigate("/trial")}
-            className="hero-cta"
-          >
-            Попробовать бесплатно
-          </Button>
         </section>
-        <Button
-          size="large"
-          onClick={() => navigate("/trial")}
-          className="hero-cta"
-        >
-          Попробовать бесплатно
-        </Button>
         {/* How Learning Works */}
         <section className="learning-steps">
           <h2 className="section-title">Как будет проходить обучение</h2>
@@ -154,6 +143,27 @@ export const Landing: React.FC = () => {
           </div>
         </section>
 
+        {/* About Section */}
+        <section className="about-section">
+          <h2 className="section-title">О нас</h2>
+          <Card className="about-card">
+            <h3 className="about-subtitle">Мы - это:</h3>
+            <p className="about-text">
+              Платформа, помогающая повысить эффективность обучения у
+              школьников. Это веб‑приложение, которое объединяет школьную
+              программу (математика, русский, окружающий мир и другие предметы)
+              с элементами, которые увлекают детей и подростков: короткие видео,
+              ИИ‑помощник, задания и система баллов с реальными призами.
+            </p>
+            <h3 className="about-subtitle">Наша цель:</h3>
+            <p className="about-text">
+              Мягко вовлекать детей в учёбу через понятный и дружелюбный формат:
+              короткие «вирусные» видео, задания и награды, которые помогают
+              удерживать внимание и формировать привычку учиться.
+            </p>
+          </Card>
+        </section>
+
         {/* Team Section */}
         <section className="team-section">
           <h2 className="section-title">Наша команда</h2>
@@ -171,6 +181,22 @@ export const Landing: React.FC = () => {
                 <p className="team-role">{member.role}</p>
               </Card>
             ))}
+          </div>
+        </section>
+
+        {/* Pricing Section */}
+        <section className="pricing-section">
+          <h2 className="section-title">Тарифы</h2>
+          <div className="pricing-grid">
+            <Card className="pricing-card">
+              <img src={tariffBase} alt="Тариф Базовый" className="pricing-img" />
+            </Card>
+            <Card className="pricing-card">
+              <img src={tariffStandard} alt="Тариф Стандарт" className="pricing-img" />
+            </Card>
+            <Card className="pricing-card">
+              <img src={tariffPremium} alt="Тариф Премиум" className="pricing-img" />
+            </Card>
           </div>
         </section>
       </div>

@@ -31,6 +31,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-family: 'Press Start 2P', cursive;
 }
 
 .auth-form {

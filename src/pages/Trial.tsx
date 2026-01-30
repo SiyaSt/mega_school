@@ -1,24 +1,30 @@
-﻿import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SubjectCard } from "../components/common/SubjectCard";
 import { Card } from "../components/common/Card";
 import "./Trial.css";
 
-import placeholderIcon from "../assets/image 1.png";
+import russianIcon from "../assets/russian-icon.png";
+
+import mathIcon from "../assets/math-icon.png";
+import historyIcon from "../assets/history-icon.png";
 
 const subjects = [
-  { id: "russian", name: "Русский язык", icon: placeholderIcon },
-  { id: "algebra", name: "Алгебра", icon: placeholderIcon },
-  { id: "geometry", name: "Геометрия", icon: placeholderIcon },
-  { id: "literature", name: "Литература", icon: placeholderIcon },
+  { id: "russian", name: "Русский язык", icon: russianIcon },
+  { id: "math", name: "Математика 5-7 классы", icon: mathIcon },
+  { id: "history", name: "История", icon: historyIcon },
 ];
 
 export const Trial: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSubjectSelect = (subjectId: string) => {
-    navigate(`/lesson/setup?subject=${subjectId}`);
+    navigate(`/lesson/play?subject=${subjectId}`);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="trial">
@@ -26,6 +32,7 @@ export const Trial: React.FC = () => {
         <div className="trial-container">
           <h1 className="trial-title">Пробный режим</h1>
 
+          {/* Description Block */}
           <Card className="trial-description">
             <h2>Что такое пробный режим?</h2>
             <p>
@@ -41,6 +48,7 @@ export const Trial: React.FC = () => {
             </p>
           </Card>
 
+          {/* Subject Selection */}
           <div className="subject-selection">
             <h2 className="selection-title">Выберите предмет</h2>
             <div className="subjects-grid">

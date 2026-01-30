@@ -1,43 +1,99 @@
-﻿import React from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/common/Button";
 import { Card } from "../components/common/Card";
 import "./Landing.css";
-import placeholderImage from "../assets/image 1.png";
+import videoBg from "../assets/dbltj.mp4";
+import videoIcon from "../assets/video-icon.png";
+import aiIcon from "../assets/ai-icon.png";
+import assignmentIcon from "../assets/assignment-icon.png";
+import pointsIcon from "../assets/points-icon.png";
+
+import member1 from "../assets/member-1.jpg";
+import member2 from "../assets/member-2.jpg";
+import member3 from "../assets/member-3.jpg";
+import member4 from "../assets/member-4.jpg";
+import member5 from "../assets/member-5.jpg";
+import member6 from "../assets/member-6.jpg";
+import member7 from "../assets/member-7.jpg";
+import member8 from "../assets/member-8.jpg";
+import member9 from "../assets/member-9.jpg";
+import member10 from "../assets/member-10.jpg";
 
 const teamMembers = [
-  { id: 1, name: "Егор Давыдов", role: "Проджект (Team Lead)", photo: placeholderImage },
-  { id: 2, name: "Софья Вакуненкова", role: "Продакт менеджер", photo: placeholderImage },
-  { id: 3, name: "Дмитрий Данилов", role: "Архитектор-разработчик", photo: placeholderImage },
-  { id: 4, name: "Платон Окладников", role: "Маркетолог", photo: placeholderImage },
-  { id: 5, name: "Анжелика Николаева", role: "Аналитик-дизайнер", photo: placeholderImage },
-  { id: 6, name: "Полина Нисифорова", role: "UI Дизайнер", photo: placeholderImage },
-  { id: 7, name: "Тигран Палакян", role: "Финансист", photo: placeholderImage },
-  { id: 8, name: "Анастасия Стеценко", role: "Исследователь", photo: placeholderImage },
-  { id: 9, name: "Михаил Милькевич", role: "Помощник маркетолога", photo: placeholderImage },
-  { id: 10, name: "Фуфик", role: "Наш маскот", photo: placeholderImage },
+  {
+    id: 1,
+    name: "Давыдов Егор",
+    role: "Проджект (Team Lead), разработчик",
+    photo: member1,
+  },
+  {
+    id: 2,
+    name: "Вакуненкова Софья",
+    role: "Продакт менеджер",
+    photo: member2,
+  },
+  {
+    id: 3,
+    name: "Данилов Дмитрий",
+    role: "Архитектор-разработчик",
+    photo: member3,
+  },
+  {
+    id: 4,
+    name: "Окладников Платон",
+    role: "Маркетолог",
+    photo: member4,
+  },
+  {
+    id: 5,
+    name: "Николаева Анжелика",
+    role: "Аналитик-дизайнер",
+    photo: member5,
+  },
+  { id: 6, name: "Нисифорова Полина", role: "UI Дизайнер", photo: member6 },
+  { id: 7, name: "Палакян Тигран", role: "Финансист", photo: member7 },
+  {
+    id: 8,
+    name: "Стеценко Анастасия",
+    role: "Исследователь-разработчик",
+    photo: member8,
+  },
+  {
+    id: 9,
+    name: "Милькевич Михаил",
+    role: "Помощник маркетолога",
+    photo: member9,
+  },
+  {
+    id: 10,
+    name: "Фуфик",
+    role: "Наш маскот",
+    photo: member10,
+  },
 ];
 
 const learningSteps = [
   {
-    icon: placeholderImage,
+    icon: videoIcon,
     title: "Смотри видео",
-    description: "Короткие уроки в формате микро-видео, как в TikTok",
+    description: "Интересные уроки в формате коротких видео, как в TikTok",
   },
   {
-    icon: placeholderImage,
+    icon: aiIcon,
     title: "Занимайся с ИИ-другом",
-    description: "Персональный помощник объяснит тему и поддержит",
+    description: "Твой персональный помощник объяснит сложные темы и поддержит",
   },
   {
-    icon: placeholderImage,
+    icon: assignmentIcon,
     title: "Выполняй задания",
-    description: "4 задания по теме для закрепления материала",
+    description: "5 заданий после каждого урока для закрепления материала",
   },
   {
-    icon: placeholderImage,
+    icon: pointsIcon,
     title: "Получай баллы",
-    description: "Зарабатывай баллы за ответы и обменивай на призы",
+    description:
+      "Зарабатывай баллы за правильные ответы и обменивай их на призы",
   },
 ];
 
@@ -47,11 +103,22 @@ export const Landing: React.FC = () => {
   return (
     <div className="landing">
       <div className="landing-main">
+        {/* Hero Block */}
         <section className="hero">
-          <div
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
             className="hero-video-bg"
-            style={{ backgroundImage: `url(${placeholderImage})`, backgroundSize: "cover" }}
-          />
+            onCanPlay={(e) => {
+              const video = e.target as HTMLVideoElement;
+              video.defaultPlaybackRate = 0.7;
+              video.playbackRate = 0.7;
+            }}
+          >
+            <source src={videoBg} type="video/mp4" />
+          </video>
           <Button
             size="large"
             onClick={() => navigate("/trial")}
@@ -60,7 +127,14 @@ export const Landing: React.FC = () => {
             Попробовать бесплатно
           </Button>
         </section>
-
+        <Button
+          size="large"
+          onClick={() => navigate("/trial")}
+          className="hero-cta"
+        >
+          Попробовать бесплатно
+        </Button>
+        {/* How Learning Works */}
         <section className="learning-steps">
           <h2 className="section-title">Как будет проходить обучение</h2>
           <div className="steps-grid">
@@ -80,6 +154,7 @@ export const Landing: React.FC = () => {
           </div>
         </section>
 
+        {/* Team Section */}
         <section className="team-section">
           <h2 className="section-title">Наша команда</h2>
           <div className="team-grid">

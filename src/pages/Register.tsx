@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../components/common/Button";
 import { Card } from "../components/common/Card";
@@ -9,7 +9,8 @@ const SUBJECTS = [
   { id: "russian", name: "Русский язык" },
   { id: "algebra", name: "Алгебра" },
   { id: "geometry", name: "Геометрия" },
-  { id: "literature", name: "Литература" },
+  { id: "math", name: "Математика (до 7 класса)" },
+  { id: "history", name: "История" },
 ];
 
 export const Register: React.FC = () => {

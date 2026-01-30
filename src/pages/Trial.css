@@ -1,13 +1,14 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&family=VT323&display=swap');
 
 
 .trial {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url('../assets/image 1.png');
-  background-repeat: no-repeat;
-  background-position: left 20px top 40px;
+  background-image: url('../assets/image 1.png'),
+  url('../assets/image 2.png');
+  background-repeat: no-repeat, no-repeat;
+  background-position: left 20px top 40px, right 20px bottom 100px;
   background-size: 400px;
 }
 
@@ -19,6 +20,9 @@
 .trial-container {
   max-width: 1280px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .trial-title {
@@ -32,6 +36,7 @@
 .trial-description {
   margin-bottom: 3rem;
   padding: 2rem;
+  max-width: 800px;
 }
 
 .trial-description h2 {
@@ -74,33 +79,15 @@
   justify-items: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  .trial-title {
-    color: rgba(255, 255, 255, 0.87);
-  }
-
-  .trial-description h2 {
-    color: rgba(255, 255, 255, 0.87);
-  }
-
-  .trial-description p {
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  .selection-title {
-    color: rgba(255, 255, 255, 0.87);
-  }
-}
-
 @media (max-width: 768px) {
   .trial-title {
     font-size: 2rem;
   }
-
+  
   .trial-description {
     padding: 1.5rem;
   }
-
+  
   .subjects-grid {
     grid-template-columns: 1fr;
   }

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '../components/common/Card';
 import { useAuth } from '../context/AuthContext';
@@ -6,10 +6,8 @@ import { useUserProgress } from '../context/UserProgressContext';
 import './DashboardParent.css';
 
 const SUBJECT_NAMES: Record<string, string> = {
-  russian: 'Русский язык',
-  algebra: 'Алгебра',
-  geometry: 'Геометрия',
-  literature: 'Литература',
+  russian: 'Русский язык', algebra: 'Алгебра', geometry: 'Геометрия',
+  math: 'Математика', history: 'История',
 };
 
 export const DashboardParent: React.FC = () => {

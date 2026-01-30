@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import "./Auth.css";
 
 const SUBJECTS = [
-  { id: "russian", name: "Русский язык" },
+  { id: "geography", name: "География" },
   { id: "algebra", name: "Алгебра" },
   { id: "geometry", name: "Геометрия" },
   { id: "math", name: "Математика (до 7 класса)" },

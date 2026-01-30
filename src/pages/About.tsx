@@ -1,5 +1,6 @@
 import "./About.css";
+import rating from "../assets/Рейтинг.jpg";
 
 export const About = () => {
-  return <img alt={" "} src={"src/assets/Рейтинг.jpg"} className={"img"}></img>;
+  return <img alt={" "} src={rating} className={"img"}></img>;
 };

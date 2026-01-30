@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2026 Mega School. Все права защищены нами :)</p>
+        <p>&copy; 2026 EDU KIDS. Все права защищены нами :)</p>
       </div>
     </footer>
   );

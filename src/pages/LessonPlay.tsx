@@ -10,7 +10,7 @@ import { useUserProgress } from "../context/UserProgressContext";
 import "./LessonPlay.css";
 
 const subjectNames: Record<string, string> = {
-  russian: "Русский язык",
+  geography: "География",
   algebra: "Алгебра",
   geometry: "Геометрия",
   math: "Математика",
@@ -95,6 +95,7 @@ export const LessonPlay: React.FC = () => {
             <div className="lesson-left">
               <div className="video-section">
                 <VideoPlayerMock
+                  keyName={subjectId}
                   subjectName={subjectName}
                   topicName={lessonTopic.topicName}
                 />
@@ -104,6 +105,7 @@ export const LessonPlay: React.FC = () => {
             <div className="lesson-right">
               <div className="chat-section">
                 <ChatWithAI
+                  keyName={subjectId}
                   questions={lessonTopic.questions}
                   topicName={lessonTopic.topicName}
                   onPointsChange={handlePointsChange}

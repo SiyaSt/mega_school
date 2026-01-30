@@ -1,7 +1,5 @@
+import "./About.css";
+
 export const About = () => {
-    return (
-        <div>
-          О насddddd
-        </div>
-    );
+  return <img alt={" "} src={"src/assets/Рейтинг.jpg"} className={"img"}></img>;
 };

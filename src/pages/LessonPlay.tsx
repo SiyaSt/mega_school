@@ -40,6 +40,10 @@ export const LessonPlay: React.FC = () => {
     }
   }, [lessonTopic]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (!lessonTopic) {
     return (
       <div className="lesson-play">

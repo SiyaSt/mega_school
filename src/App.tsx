@@ -26,7 +26,7 @@ function App() {
         }
       />
       <Route
-        path="/about"
+        path="/rating"
         element={
           <Layout showHeader showFooter>
             <About />
@@ -52,7 +52,7 @@ function App() {
       <Route
         path="/lesson/play"
         element={
-          <Layout showHeader showFooter>
+          <Layout showHeader showFooter flag={true}>
             <LessonPlay />
           </Layout>
         }

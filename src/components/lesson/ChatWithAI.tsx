@@ -6,6 +6,7 @@ import {
   getCompletionMessage,
 } from "../../services/aiHelper";
 import "./ChatWithAI.css";
+import lo from "../../assets/image 12.png";
 
 interface ChatMessage {
   id: number;
@@ -38,14 +39,6 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   const [, setTotalPoints] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageIdCounter = useRef(0);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   useEffect(() => {
     // Инициализация: приветственное сообщение и первое задание
@@ -182,13 +175,9 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   return (
     <div className="chat-with-ai">
       <div className="chat-header">
-        <img
-          className="ai-avatar"
-          alt={" "}
-          src={"src/assets/ai-icon.png"}
-        ></img>
+        <img className="ai-avatar" alt={" "} src={lo}></img>
         <div>
-          <h3>ИИ-друг</h3>
+          <h3 className="ai-avatar-name">НЕО</h3>
           <p className="chat-status">Онлайн • Помогает тебе учиться</p>
         </div>
       </div>
@@ -200,11 +189,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
             className={`chat-message ${message.sender === "ai" ? "ai-message" : "user-message"}`}
           >
             {message.sender === "ai" && (
-              <img
-                className="ai-avatar"
-                alt={" "}
-                src={"src/assets/ai-icon.png"}
-              ></img>
+              <img className="ai-avatar" alt={" "} src={lo}></img>
             )}
             <div className="message-content">
               <p className="message-text">{message.text}</p>

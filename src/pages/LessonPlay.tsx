@@ -32,6 +32,12 @@ export const LessonPlay: React.FC = () => {
   const subjectName = subjectId
     ? subjectNames[subjectId] || "Предмет"
     : "Предмет";
+  const mediaKey =
+    subjectId === "geography"
+      ? "geography"
+      : subjectId === "history"
+        ? "history"
+        : "math";
 
   useEffect(() => {
     if (lessonTopic) {
@@ -95,7 +101,7 @@ export const LessonPlay: React.FC = () => {
             <div className="lesson-left">
               <div className="video-section">
                 <VideoPlayerMock
-                  keyName={subjectId}
+                  keyName={mediaKey}
                   subjectName={subjectName}
                   topicName={lessonTopic.topicName}
                 />
@@ -105,7 +111,7 @@ export const LessonPlay: React.FC = () => {
             <div className="lesson-right">
               <div className="chat-section">
                 <ChatWithAI
-                  keyName={subjectId}
+                  keyName={mediaKey}
                   questions={lessonTopic.questions}
                   topicName={lessonTopic.topicName}
                   onPointsChange={handlePointsChange}

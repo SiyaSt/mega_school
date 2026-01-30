@@ -25,7 +25,7 @@ interface ChatWithAIProps {
   topicName: string;
   onPointsChange: (points: number) => void;
   onComplete: (totalPoints: number) => void;
-  keyName: string;
+  keyName: keyof typeof avatars;
 }
 
 const avatars = {
@@ -50,6 +50,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   onComplete,
   keyName,
 }) => {
+  const avatar = avatars[keyName];
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userInput, setUserInput] = useState("");
@@ -194,9 +195,9 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   return (
     <div className="chat-with-ai">
       <div className="chat-header">
-        <img className="ai-avatar" alt={" "} src={avatars[keyName].icon}></img>
+        <img className="ai-avatar" alt={" "} src={avatar.icon}></img>
         <div>
-          <h3 className="ai-avatar-name">{avatars[keyName].name}</h3>
+          <h3 className="ai-avatar-name">{avatar.name}</h3>
           <p className="chat-status">Онлайн • Помогает тебе учиться</p>
         </div>
       </div>
@@ -211,7 +212,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
               <img
                 className="ai-avatar"
                 alt={" "}
-                src={avatars[keyName].icon}
+                src={avatar.icon}
               ></img>
             )}
             <div className="message-content">

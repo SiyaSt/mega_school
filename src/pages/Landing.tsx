@@ -1,6 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../components/common/Button";
 import { Card } from "../components/common/Card";
 import "./Landing.css";
 import videoBg from "../assets/dbltj.mp4";
@@ -101,8 +99,6 @@ const learningSteps = [
 ];
 
 export const Landing: React.FC = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="landing">
       <div className="landing-main">

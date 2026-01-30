@@ -26,7 +26,7 @@ function App() {
         }
       />
       <Route
-        path="/about"
+        path="/rating"
         element={
           <Layout showHeader showFooter>
             <About />

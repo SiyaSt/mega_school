@@ -13,8 +13,7 @@ export const Footer: React.FC = () => {
         <div className="footer-section">
           <h4>Навигация</h4>
           <Link to="/dashboard">Личный кабинет</Link>
-          <Link to="/store">Магазин</Link>
-          <Link to="/about">О проекте</Link>
+          <Link to="/rating">Рейтинг</Link>
         </div>
         <div className="footer-section">
           <h4>Регистрация</h4>

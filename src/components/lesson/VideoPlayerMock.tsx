@@ -40,7 +40,10 @@ export const VideoPlayerMock: React.FC<VideoPlayerMockProps> = ({
               disablePictureInPicture
               controlsList="nodownload nofullscreen noremoteplayback"
             >
-              <source src={video[keyName]} type="video/mp4" />
+              <source
+                src={video[keyName as keyof typeof video]}
+                type="video/mp4"
+              />
             </video>
           </div>
         </div>

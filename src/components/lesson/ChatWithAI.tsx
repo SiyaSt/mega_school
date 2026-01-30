@@ -194,9 +194,15 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   return (
     <div className="chat-with-ai">
       <div className="chat-header">
-        <img className="ai-avatar" alt={" "} src={avatars[keyName].icon}></img>
+        <img
+          className="ai-avatar"
+          alt={" "}
+          src={avatars[keyName as keyof typeof avatars].icon}
+        ></img>
         <div>
-          <h3 className="ai-avatar-name">{avatars[keyName].name}</h3>
+          <h3 className="ai-avatar-name">
+            {avatars[keyName as keyof typeof avatars].name}
+          </h3>
           <p className="chat-status">Онлайн • Помогает тебе учиться</p>
         </div>
       </div>
@@ -211,7 +217,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
               <img
                 className="ai-avatar"
                 alt={" "}
-                src={avatars[keyName].icon}
+                src={avatars[keyName as keyof typeof avatars].icon}
               ></img>
             )}
             <div className="message-content">

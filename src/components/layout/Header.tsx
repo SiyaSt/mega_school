@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Header.css";
 
-export const Header: React.FC<{ flag?: boolean }> = ({ flag }) => {
+export const Header: React.FC<{ flag?: boolean }> = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);

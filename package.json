@@ -1,5 +1,5 @@
 {
-  "name": "mega_school",
+  "name": "edu_kids",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -51,5 +51,5 @@
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4"
   },
-  "homepage": "https://SiyaSt.github.io/mega_school/"
+  "homepage": "https://SiyaSt.github.io/edu_kids/"
 }

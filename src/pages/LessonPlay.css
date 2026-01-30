@@ -49,7 +49,7 @@
 
 .lesson-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr;
   gap: 24px;
   align-items: start;
 }

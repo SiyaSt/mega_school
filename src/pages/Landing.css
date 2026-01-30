@@ -23,34 +23,32 @@
 
 /* Hero Section */
 .hero {
-  width: 100vw;
+  width: 100%;
   text-align: center;
   color: white;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  margin-left: calc(50% - 50vw);
-  z-index: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 110px;
-  margin-bottom: 3rem;
+  height: 120vh;
 }
 
 .hero-video-bg {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: none;
-  z-index: 0;
+  top: 55%;
+  left: 50%;
+  max-width: 100%;
+  min-height: 80%;
+
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 100;
 }
 
 .hero-cta {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  top: 125%;
+  left: 35%;
+}
+
+.btn-n{
+  width: 200px;
 }
 
 /* Learning Steps */

@@ -36,6 +36,8 @@
 .trial-description {
   margin-bottom: 3rem;
   padding: 2rem;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
   max-width: 800px;
 }
 

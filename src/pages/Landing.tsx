@@ -20,6 +20,8 @@ import member10 from "../assets/member-10.jpg";
 import tariffBase from "../assets/Тариф баз..png";
 import tariffStandard from "../assets/Тариф станд.png";
 import tariffPremium from "../assets/Тариф прем.png";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../components/common/Button.tsx";
 
 const teamMembers = [
   {
@@ -79,26 +81,31 @@ const learningSteps = [
     icon: videoIcon,
     title: "Смотри видео",
     description: "Интересные уроки в формате коротких видео, как в TikTok",
+    flag: false,
   },
   {
     icon: aiIcon,
     title: "Занимайся с ИИ-другом",
     description: "Твой персональный помощник объяснит сложные темы и поддержит",
+    flag: false,
   },
   {
     icon: assignmentIcon,
-    title: "Выполняй задания",
+    title: "Выполняй задания и соревнуйся",
     description: "5 заданий после каждого урока для закрепления материала",
+    flag: true,
   },
   {
     icon: pointsIcon,
     title: "Получай баллы",
     description:
       "Зарабатывай баллы за правильные ответы и обменивай их на призы",
+    flag: false,
   },
 ];
 
 export const Landing: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="landing">
       <div className="landing-main">
@@ -118,8 +125,21 @@ export const Landing: React.FC = () => {
           >
             <source src={videoBg} type="video/mp4" />
           </video>
+          <Button
+            size="large"
+            onClick={() => navigate("/trial")}
+            className="hero-cta"
+          >
+            Попробовать бесплатно
+          </Button>
         </section>
-        {/* How Learning Works */}
+        <Button
+          size="large"
+          onClick={() => navigate("/trial")}
+          className="hero-cta"
+        >
+          Попробовать бесплатно
+        </Button>
         <section className="learning-steps">
           <h2 className="section-title">Как будет проходить обучение</h2>
           <div className="steps-grid">
@@ -134,6 +154,15 @@ export const Landing: React.FC = () => {
                 </div>
                 <h3 className="step-title">{step.title}</h3>
                 <p className="step-description">{step.description}</p>
+                {step.flag && (
+                  <Button
+                    size="large"
+                    onClick={() => navigate("/rating")}
+                    className="btn-n"
+                  >
+                    Рейтинг
+                  </Button>
+                )}
               </Card>
             ))}
           </div>
@@ -143,7 +172,7 @@ export const Landing: React.FC = () => {
         <section className="about-section">
           <h2 className="section-title">О нас</h2>
           <Card className="about-card">
-            <h3 className="about-subtitle">Мы - это:</h3>
+            <h3 className="about-subtitle">Мы:</h3>
             <p className="about-text">
               Платформа, помогающая повысить эффективность обучения у
               школьников. Это веб‑приложение, которое объединяет школьную
@@ -185,13 +214,25 @@ export const Landing: React.FC = () => {
           <h2 className="section-title">Тарифы</h2>
           <div className="pricing-grid">
             <Card className="pricing-card">
-              <img src={tariffBase} alt="Тариф Базовый" className="pricing-img" />
+              <img
+                src={tariffBase}
+                alt="Тариф Базовый"
+                className="pricing-img"
+              />
             </Card>
             <Card className="pricing-card">
-              <img src={tariffStandard} alt="Тариф Стандарт" className="pricing-img" />
+              <img
+                src={tariffStandard}
+                alt="Тариф Стандарт"
+                className="pricing-img"
+              />
             </Card>
             <Card className="pricing-card">
-              <img src={tariffPremium} alt="Тариф Премиум" className="pricing-img" />
+              <img
+                src={tariffPremium}
+                alt="Тариф Премиум"
+                className="pricing-img"
+              />
             </Card>
           </div>
         </section>

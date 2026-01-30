@@ -20,6 +20,10 @@
   padding: 10px 0;
 }
 
+.header.scrolled .logo{
+  color: #ff9a02;
+}
+
 .header.scrolled .nav-link {
   color: #222;
 }

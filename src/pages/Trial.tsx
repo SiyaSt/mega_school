@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SubjectCard } from "../components/common/SubjectCard";
 import { Card } from "../components/common/Card";
@@ -21,6 +21,10 @@ export const Trial: React.FC = () => {
   const handleSubjectSelect = (subjectId: string) => {
     navigate(`/lesson/play?subject=${subjectId}`);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="trial">

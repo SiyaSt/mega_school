@@ -39,14 +39,6 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageIdCounter = useRef(0);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   useEffect(() => {
     // Инициализация: приветственное сообщение и первое задание
     if (questions.length === 0) return;
@@ -185,10 +177,10 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
         <img
           className="ai-avatar"
           alt={" "}
-          src={"src/assets/ai-icon.png"}
+          src={"src/assets/image 12.png"}
         ></img>
         <div>
-          <h3>ИИ-друг</h3>
+          <h3 className="ai-avatar-name">НЕО</h3>
           <p className="chat-status">Онлайн • Помогает тебе учиться</p>
         </div>
       </div>
@@ -203,7 +195,7 @@ export const ChatWithAI: React.FC<ChatWithAIProps> = ({
               <img
                 className="ai-avatar"
                 alt={" "}
-                src={"src/assets/ai-icon.png"}
+                src={"src/assets/image 12.png"}
               ></img>
             )}
             <div className="message-content">

@@ -20,6 +20,9 @@
 .trial-container {
   max-width: 1280px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .trial-title {
@@ -33,6 +36,7 @@
 .trial-description {
   margin-bottom: 3rem;
   padding: 2rem;
+  max-width: 800px;
 }
 
 .trial-description h2 {

@@ -8,7 +8,7 @@
   background-image: url('../assets/image 1.png'),
   url('../assets/image 2.png');
   background-repeat: no-repeat, no-repeat;
-  background-position: left top 96vh, right bottom 40vh;
+  background-position: left -20px top 98vh, right bottom 40vh;
   background-size: 400px;
 }
 
@@ -55,8 +55,9 @@
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: #333;
+  color: #2e2b2b;
   font-family: 'Press Start 2P', cursive;
+  text-shadow: 0 4px 20px rgba(232, 202, 202, 0.82);
 }
 
 .steps-grid {
